@@ -1,3 +1,5 @@
+import StyledComponentsRegistry from "@/style/lib/registry";
+import Theme from "@/style/lib/theme";
 import type { Metadata } from "next";
 import Script from "next/script";
 
@@ -18,7 +20,9 @@ export default function RootLayout({
           src="https://www.youtube.com/iframe_api"
           strategy="beforeInteractive"
         />
-        {children}
+        <StyledComponentsRegistry>
+          <Theme>{children}</Theme>
+        </StyledComponentsRegistry>
       </body>
     </html>
   );
