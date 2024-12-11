@@ -1,6 +1,6 @@
 "use client";
 
-import { WaveProvider } from "@/components/atoms/wave";
+import { WaveProvider } from "@/hooks/useWave";
 import Layout from "@/components/templates/layout";
 import Global from "@/style/global";
 import { PropsWithChildren } from "react";

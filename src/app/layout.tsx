@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 };
 
 const font = localFont({
-  src: "./fonts/ownglyph.ttf",
+  src: "./fonts/hakgyoansim.otf",
   display: "swap",
-  variable: "--font-ownglyph",
+  variable: "--font-hakgyoansim",
 });
 
 export default function RootLayout({

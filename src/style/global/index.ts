@@ -19,7 +19,7 @@ const Global = styled.createGlobalStyle`
     padding: 0;
     margin: 0;
 
-    font-family: var(--font-ownglyph);
+    font-family: var(--font-hakgyoansim);
   }
 
   a {

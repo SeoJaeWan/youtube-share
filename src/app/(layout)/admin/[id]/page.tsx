@@ -1,5 +1,6 @@
 "use client";
 
+import AdminTemplate from "@/components/templates/admin";
 import { useRef, useState } from "react";
 
 // https://www.youtube.com/embed/QJV9fu9yAKU?si=f2ApoSvQuMJumCdq
@@ -56,17 +57,18 @@ export default function Admin() {
   }
 
   return (
-    <>
-      <p>{title}</p>
-      <div id={"player"} hidden></div>
-      <button
-        onClick={() => {
-          onYouTubeIframeAPIReady();
-        }}
-      >
-        재생
-      </button>
-      <button onClick={add}>추가</button>
-    </>
+    <AdminTemplate />
+    // <>
+    //   <p>{title}</p>
+    //   <div id={"player"} hidden></div>
+    //   <button
+    //     onClick={() => {
+    //       onYouTubeIframeAPIReady();
+    //     }}
+    //   >
+    //     재생
+    //   </button>
+    //   <button onClick={add}>추가</button>
+    // </>
   );
 }

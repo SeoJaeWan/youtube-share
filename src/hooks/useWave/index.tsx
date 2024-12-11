@@ -29,7 +29,6 @@ export const WaveProvider = (props: PropsWithChildren) => {
       setWave(true);
 
       const waveAnimationEnd = () => {
-        console.log("!!!!", path);
         callback();
         waveRef.current!.removeEventListener("animationend", waveAnimationEnd);
       };

@@ -4,6 +4,7 @@ export const color = {
   primary: "#ffa6e0",
   secondary: "#fff391",
   white: "#ffffff",
+  black: "#121212",
 };
 
 export const media = {

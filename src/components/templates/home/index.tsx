@@ -2,7 +2,7 @@
 import Logo from "@/components/atoms/logo";
 import HomeStyle from "./home.style";
 import Button from "@/components/atoms/button";
-import useWave from "@/components/atoms/wave";
+import useWave from "@/hooks/useWave";
 import { useRouter } from "next/navigation";
 
 const HomeTemplate = () => {
