@@ -8,8 +8,9 @@ const Global = styled.createGlobalStyle`
   }
 
   body {
-    user-select: none;
+    position: relative;
 
+    user-select: none;
     background-color: ${({ theme }) => theme.color.body};
   }
 
@@ -17,6 +18,8 @@ const Global = styled.createGlobalStyle`
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+
+    font-family: var(--font-ownglyph);
   }
 
   a {

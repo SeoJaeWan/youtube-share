@@ -1,7 +1,7 @@
 import styled, { keyframes } from "styled-components";
 
 const Container = styled.div`
-  width: 80%;
+  width: 90%;
 
   margin: 0 auto;
 `;
@@ -56,7 +56,7 @@ const pEyeMove = keyframes`
   }
 
   100% {
-    transform: translateY(0);
+    transform: translateY(3px);
   }
   `;
 
@@ -103,6 +103,70 @@ const popR2 = keyframes`
       transform: translate(5px, 0px);
     }
   `;
+
+const popY1 = keyframes`
+    0% {
+      opacity: 0;
+      transform: translate(5px, 10px);
+    };
+
+    50% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+      transform: translate(0px,-5px);
+    }
+`;
+
+const popY2 = keyframes`
+    0% {
+      opacity: 0;
+      transform: translate(-5px, 10px);
+    };
+
+    50% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+      transform: translate(0px,-5px);
+    }
+`;
+
+const popP1 = keyframes`
+    0% {
+      opacity: 0;
+      transform: translate(5px, 10px);
+    };
+
+    50% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+      transform: translate(0px,-5px);
+    }
+`;
+
+const popP2 = keyframes`
+    0% {
+      opacity: 0;
+      transform: translate(-5px, 10px);
+    };
+
+    50% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+      transform: translate(5px,-5px);
+    }
+`;
 
 const Svg = styled.svg`
   .cls-1 {
@@ -180,8 +244,24 @@ const Svg = styled.svg`
     animation: ${fadeDown} 1s ease-in-out 1.2s forwards;
   }
 
+  .y-m-1 {
+    animation: ${popY1} 0.9s linear 1.8s forwards;
+  }
+
+  .y-m-2 {
+    animation: ${popY2} 0.9s linear 1.9s forwards;
+  }
+
   .p {
     animation: ${fadeDown} 0.8s ease-in-out 1s forwards;
+  }
+
+  .p-m-1 {
+    animation: ${popP1} 0.9s linear 1.6s forwards;
+  }
+
+  .p-m-2 {
+    animation: ${popP2} 0.9s linear 1.7s forwards;
   }
 
   .color-h {

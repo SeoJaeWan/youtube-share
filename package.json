@@ -23,6 +23,7 @@
     "eslint": "^8",
     "eslint-config-next": "15.0.4",
     "nodemon": "^3.1.7",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   }
 }
