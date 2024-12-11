@@ -1,7 +1,8 @@
 export const color = {
   body: "#f5f5f5",
-  main: "#ffffff",
-  primary: "#FF00A7",
+  main: "#fefffa",
+  primary: "#ffa6e0",
+  secondary: "#fff391",
   white: "#ffffff",
 };
 
