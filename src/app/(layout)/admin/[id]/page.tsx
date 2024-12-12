@@ -1,60 +1,60 @@
 "use client";
 
 import AdminTemplate from "@/components/templates/admin";
-import { useRef, useState } from "react";
+// import { useRef, useState } from "react";
 
 // https://www.youtube.com/embed/QJV9fu9yAKU?si=f2ApoSvQuMJumCdq
-const LIST = [
-  "QJV9fu9yAKU",
-  "xqdAk07lWP0",
-  "QJV9fu9yAKU",
-  "xqdAk07lWP0",
-  "QJV9fu9yAKU",
-  "xqdAk07lWP0",
-  "QJV9fu9yAKU",
-];
+// const LIST = [
+//   "QJV9fu9yAKU",
+//   "xqdAk07lWP0",
+//   "QJV9fu9yAKU",
+//   "xqdAk07lWP0",
+//   "QJV9fu9yAKU",
+//   "xqdAk07lWP0",
+//   "QJV9fu9yAKU",
+// ];
 export default function Admin() {
-  const [video, setVideo] = useState(0);
-  const [title, setTitle] = useState("");
-  const videoRef = useRef<YT.Player | null>(null);
+  // const [video, setVideo] = useState(0);
+  // const [title, setTitle] = useState("");
+  // const videoRef = useRef<YT.Player | null>(null);
 
-  function onPlayerStateChange(event: YT.PlayerStateChangeEvent) {
-    console.log(event);
-    if (event.data === YT.PlayerState.ENDED) {
-      setVideo((prev) => {
-        videoRef.current?.loadVideoById(LIST[prev]);
-        return prev + 1;
-      });
-    }
-  }
+  // function onPlayerStateChange(event: YT.PlayerStateChangeEvent) {
+  //   console.log(event);
+  //   if (event.data === YT.PlayerState.ENDED) {
+  //     setVideo((prev) => {
+  //       videoRef.current?.loadVideoById(LIST[prev]);
+  //       return prev + 1;
+  //     });
+  //   }
+  // }
 
-  function onPlayerReady(event: YT.PlayerEvent) {
-    videoRef.current = event.target;
-    console.log(event);
-    setTitle(event.target.videoTitle);
-    event.target.playVideo();
-  }
+  // function onPlayerReady(event: YT.PlayerEvent) {
+  //   videoRef.current = event.target;
+  //   console.log(event);
+  //   // setTitle(event.target.videoTitle);
+  //   event.target.playVideo();
+  // }
 
-  const add = () => {
-    // 동영상 변경
-    videoRef.current?.loadVideoById(LIST[1]);
+  // const add = () => {
+  //   // 동영상 변경
+  //   videoRef.current?.loadVideoById(LIST[1]);
 
-    // videoRef.current?.loadPlaylist(LIST);
-  };
+  //   // videoRef.current?.loadPlaylist(LIST);
+  // };
 
-  function onYouTubeIframeAPIReady() {
-    new window.YT.Player("player", {
-      height: "360",
-      width: "640",
-      videoId: LIST[video],
-      events: {
-        onReady: onPlayerReady,
-        onStateChange: onPlayerStateChange,
-      },
-    });
+  // function onYouTubeIframeAPIReady() {
+  //   new window.YT.Player("player", {
+  //     height: "360",
+  //     width: "640",
+  //     videoId: LIST[video],
+  //     events: {
+  //       onReady: onPlayerReady,
+  //       onStateChange: onPlayerStateChange,
+  //     },
+  //   });
 
-    setVideo((prev) => prev + 1);
-  }
+  //   setVideo((prev) => prev + 1);
+  // }
 
   return (
     <AdminTemplate />

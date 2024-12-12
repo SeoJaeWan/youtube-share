@@ -1,5 +1,7 @@
-import Controller from "@/components/atoms/admin/controller";
+import Controller from "@/components/molecules/admin/controller";
 import AdminStyle from "./admin.style";
+import List from "@/components/molecules/admin/list";
+import AddMusic from "@/components/organisms/admin/AddMusic";
 
 const AdminTemplate = () => {
   return (
@@ -7,7 +9,11 @@ const AdminTemplate = () => {
       <AdminStyle.Controller>
         <Controller />
       </AdminStyle.Controller>
-      <AdminStyle.List></AdminStyle.List>
+      <AdminStyle.List>
+        <List />
+      </AdminStyle.List>
+
+      <AddMusic />
     </AdminStyle.Container>
   );
 };

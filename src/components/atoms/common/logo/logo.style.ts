@@ -182,22 +182,22 @@ const Svg = styled.svg`
   }
 
   .cls-2 {
-    fill: #feffed;
+    fill: ${(props) => props.theme.color.third};
   }
 
   .cls-2,
   .cls-3,
   .cls-4 {
-    stroke: #f387c1;
+    stroke: ${(props) => props.theme.color.fourth};
     stroke-width: 0.5px;
   }
 
   .cls-3 {
-    fill: #fff391;
+    fill: ${(props) => props.theme.color.secondary};
   }
 
   .cls-4 {
-    fill: #ffa6e0;
+    fill: ${(props) => props.theme.color.primary};
   }
 
   .cls-5 {

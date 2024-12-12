@@ -2,12 +2,12 @@ import styled from "styled-components";
 
 const Container = styled.div``;
 
-const Controller = styled.div`
-  height: 40vh;
+const Controller = styled.section`
+  height: 30vh;
 `;
 
-const List = styled.ul`
-  height: 60vh;
+const List = styled.section`
+  height: 70vh;
 `;
 
 const AdminStyle = {

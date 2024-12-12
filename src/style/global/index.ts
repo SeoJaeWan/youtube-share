@@ -3,8 +3,6 @@ import * as styled from "styled-components";
 const Global = styled.createGlobalStyle`
   html,
   body {
-    max-width: 100vw;
-    overflow-x: hidden;
   }
 
   body {

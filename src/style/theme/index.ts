@@ -3,6 +3,9 @@ export const color = {
   main: "#fefffa",
   primary: "#ffa6e0",
   secondary: "#fff391",
+  third: "#FEFFED",
+  fourth: "#f387c1",
+  five: "#DD953A",
   white: "#ffffff",
   black: "#121212",
 };
@@ -20,5 +23,3 @@ export const font = (px: number) => {
 export type ColorType = typeof color;
 export type MediaType = typeof media;
 export type FontType = typeof font;
-
-// rgb(26, 27, 31)
