@@ -17,7 +17,7 @@ const Global = styled.createGlobalStyle`
     padding: 0;
     margin: 0;
 
-    font-family: var(--font-hakgyoansim);
+    font-family: var(--font-pretendard);
   }
 
   a {

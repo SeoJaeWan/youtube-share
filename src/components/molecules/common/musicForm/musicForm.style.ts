@@ -31,14 +31,22 @@ const Input = styled.input`
   height: 50px;
 
   border: 1px solid ${(props) => props.theme.color.primary};
-  border-radius: 10px;
+  border-radius: 15px;
   background-color: ${(props) => props.theme.color.white};
-  font-size: ${(props) => props.theme.font(24)};
 
-  padding: 5px;
+  font-size: ${(props) => props.theme.font(18)};
 
-  &:focus {
+  color: ${(props) => props.theme.color.black};
+
+  padding: 15px;
+
+  &:focus,
+  &:hover,
+  &:focus::placeholder,
+  &:hover::placeholder {
     outline: none;
+    background-color: ${(props) => props.theme.color.primaryBlue};
+    color: ${(props) => props.theme.color.white};
   }
 `;
 

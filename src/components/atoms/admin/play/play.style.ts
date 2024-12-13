@@ -10,12 +10,9 @@ const StateBar = styled.svg`
   height: 100%;
 
   .button {
-    transform-origin: center;
-    transition: all 0.2s;
-
     circle {
-      fill: ${(props) => props.theme.color.primary};
-      stroke: ${(props) => props.theme.color.fourth};
+      fill: ${(props) => props.theme.color.primaryBlue};
+
       stroke-width: 2;
     }
 
@@ -24,17 +21,9 @@ const StateBar = styled.svg`
     }
   }
 
-  .bg {
-    stroke: ${(props) => props.theme.color.primary};
-    fill: ${(props) => props.theme.color.primary};
-
-    stroke-width: 10;
-    opacity: 0.5;
-  }
-
   .state {
-    stroke: ${(props) => props.theme.color.primary};
-    stroke-width: 24;
+    stroke: ${(props) => props.theme.color.white};
+    stroke-width: 4;
     stroke-dasharray: 408;
     stroke-dashoffset: 205;
 
@@ -56,12 +45,12 @@ const Container = styled.button`
   height: 70px;
 
   border-radius: 50%;
-  border: 1px solid ${(props) => props.theme.color.fourth};
+
+  transform-origin: center;
+  transition: all 0.2s;
 
   &:active {
-    .button {
-      transform: scale(0.9);
-    }
+    transform: scale(0.9);
   }
 `;
 

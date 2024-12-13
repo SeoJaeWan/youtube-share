@@ -2,20 +2,20 @@ import styled from "styled-components";
 
 const Container = styled.div``;
 
-const Controller = styled.section`
-  height: 30vh;
+const Controller = styled.div`
+  height: 10vh;
 `;
 
-const List = styled.section`
+const List = styled.div`
   position: relative;
 
-  height: 70vh;
+  height: 90vh;
 `;
 
-const AdminStyle = {
+const ClientStyle = {
   Container,
   Controller,
   List,
 };
 
-export default AdminStyle;
+export default ClientStyle;

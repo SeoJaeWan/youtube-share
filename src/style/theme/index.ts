@@ -5,15 +5,16 @@ export const color = {
   secondary: "#fff391",
   third: "#FEFFED",
   fourth: "#f387c1",
-  five: "#DD953A",
+  primaryBlue: "#FEBAE4",
   white: "#ffffff",
   black: "#121212",
+  gray: "#bdc3c7",
 };
 
 export const media = {
-  mobile: 767,
-  tablet: 1120,
-  notebook: 1680,
+  mobile: "767px",
+  tablet: "1120px",
+  notebook: "1680px",
 };
 
 export const font = (px: number) => {

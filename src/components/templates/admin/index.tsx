@@ -1,7 +1,7 @@
 import Controller from "@/components/molecules/admin/controller";
 import AdminStyle from "./admin.style";
-import List from "@/components/molecules/admin/list";
-import AddMusic from "@/components/organisms/admin/AddMusic";
+import List from "@/components/molecules/common/list";
+import AddMusic from "@/components/organisms/common/addMusic";
 
 const AdminTemplate = () => {
   return (
@@ -10,10 +10,9 @@ const AdminTemplate = () => {
         <Controller />
       </AdminStyle.Controller>
       <AdminStyle.List>
-        <List />
+        <List type={"admin"} />
+        <AddMusic />
       </AdminStyle.List>
-
-      <AddMusic />
     </AdminStyle.Container>
   );
 };

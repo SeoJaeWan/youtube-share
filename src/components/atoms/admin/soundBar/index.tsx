@@ -1,14 +1,17 @@
-import { HiMiniSpeakerWave, HiMiniSpeakerXMark } from "react-icons/hi2";
 import SoundBarStyle from "./soundBar.style";
 import { InputHTMLAttributes } from "react";
 
 const SoundBar = (props: InputHTMLAttributes<HTMLInputElement>) => {
-  const { value, ...rest } = props;
+  const { value = 0, ...rest } = props;
+
+  const trackBackground = `linear-gradient(
+      to right,
+      ${"#FFFFFF"} ${value}%,
+      ${"rgba(255, 255, 255, 0.4)"} ${value}%
+    )`;
 
   return (
     <SoundBarStyle.Container>
-      {value === 0 ? <HiMiniSpeakerXMark /> : <HiMiniSpeakerWave />}
-
       <SoundBarStyle.Input
         type={"range"}
         min={0}
@@ -16,6 +19,7 @@ const SoundBar = (props: InputHTMLAttributes<HTMLInputElement>) => {
         step={1}
         {...rest}
         value={value}
+        $trackBackground={trackBackground}
       />
     </SoundBarStyle.Container>
   );

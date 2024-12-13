@@ -6,7 +6,11 @@ const Container = styled.div`
   gap: 5px;
 `;
 
-const Input = styled.input`
+interface InputProps {
+  $trackBackground: string;
+}
+
+const Input = styled.input<InputProps>`
   width: 100%;
   height: 12px;
 
@@ -21,7 +25,7 @@ const Input = styled.input`
     width: 100%;
     height: 2px;
     cursor: pointer;
-    background: ${(props) => props.theme.color.fourth};
+    background: ${(props) => props.$trackBackground};
   }
 
   &::-webkit-slider-thumb {
@@ -31,8 +35,8 @@ const Input = styled.input`
     width: 16px;
     height: 16px;
 
-    background-color: ${(props) => props.theme.color.primary};
-    border: 2px solid ${(props) => props.theme.color.fourth};
+    background-color: ${(props) => props.theme.color.white};
+
     border-radius: 50%;
 
     margin-top: -7px;

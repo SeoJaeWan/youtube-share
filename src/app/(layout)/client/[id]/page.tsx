@@ -1,5 +1,7 @@
+import ClientTemplate from "@/components/templates/client";
+
 const Client = () => {
-  return <></>;
+  return <ClientTemplate />;
 };
 
 export default Client;
