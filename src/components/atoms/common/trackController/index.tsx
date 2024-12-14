@@ -3,12 +3,14 @@ import { IoAddOutline } from "react-icons/io5";
 import useTrackManager from "@/store/trackManager";
 import TrackControllerStyle from "./trackController.style";
 import { color } from "@/style/theme";
+import { useYoutube } from "@/hooks/useYoutube";
 
 const TrackController = () => {
   const { isList, updateList } = useTrackManager();
+  const { list } = useYoutube();
 
   const handleUpdateList = () => {
-    updateList(6);
+    updateList(list.length);
   };
 
   return (

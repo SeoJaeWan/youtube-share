@@ -38,6 +38,11 @@ declare global {
       stopVideo(): void;
       seekTo(seconds: number, allowSeekAhead: boolean): void;
       getPlayerState(): number;
+      setVolume(volume: number): void;
+      getVolume(): number;
+      getDuration(): number;
+      getCurrentTime(): number;
+      clearVideo(): void;
       videoTitle: string;
     }
   }

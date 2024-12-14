@@ -24,6 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={pretendard.variable}>
+        <div id={"player"} hidden />
         <Script
           src="https://www.youtube.com/iframe_api"
           strategy="beforeInteractive"

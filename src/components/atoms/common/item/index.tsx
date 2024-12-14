@@ -5,26 +5,31 @@ import SlideText from "../../common/slideText";
 import { color } from "@/style/theme";
 import useTrackManager from "@/store/trackManager";
 import { ListType } from "@/components/molecules/common/list";
+import { HopeMusic } from "@/types/global";
+import { useYoutube } from "@/hooks/useYoutube";
 
-interface ItemProps {
-  title: string;
-  link: string;
+interface ItemProps extends HopeMusic {
   index: number;
   delay: number;
   type: ListType;
 }
 
 const Item = (props: ItemProps) => {
-  const {
-    title,
-    delay,
-    type,
-    // link, index
-  } = props;
+  const { title, delay, type, time, index } = props;
+  const { current, update, remove } = useYoutube();
 
   const { isList, duration } = useTrackManager();
 
   const itemClass = isList ? "show" : "hide";
+  const active = current?.time === time;
+
+  const handleUpdate = () => {
+    update(index);
+  };
+
+  const handleRemove = () => {
+    remove(time);
+  };
 
   return (
     <ItemStyle.Container
@@ -37,11 +42,15 @@ const Item = (props: ItemProps) => {
       </ItemStyle.Title>
       {type === "admin" && (
         <>
-          <ItemStyle.Button>
+          <ItemStyle.Button disabled={active} onClick={handleRemove}>
             <RiDeleteBin6Line size={18} color={color.gray} />
           </ItemStyle.Button>
-          <ItemStyle.Button $active={true}>
-            <IoIosPlay size={22} color={true ? color.white : color.primary} />
+          <ItemStyle.Button
+            $active={active}
+            disabled={active}
+            onClick={handleUpdate}
+          >
+            <IoIosPlay size={22} color={active ? color.white : color.primary} />
           </ItemStyle.Button>
         </>
       )}

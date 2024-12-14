@@ -44,6 +44,10 @@ const Global = styled.createGlobalStyle`
       cursor: default;
     }
   }
+
+  #player {
+    display: none;
+  }
 `;
 
 export default Global;

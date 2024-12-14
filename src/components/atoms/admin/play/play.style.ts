@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-const StateBar = styled.svg`
+interface StateBarProps {
+  $percent: number;
+}
+
+const StateBar = styled.svg<StateBarProps>`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -16,7 +20,9 @@ const StateBar = styled.svg`
       stroke-width: 2;
     }
 
+    rect,
     path {
+      transition: all 0.4s;
       fill: ${(props) => props.theme.color.white};
     }
   }
@@ -25,12 +31,20 @@ const StateBar = styled.svg`
     stroke: ${(props) => props.theme.color.white};
     stroke-width: 4;
     stroke-dasharray: 408;
-    stroke-dashoffset: 205;
+    stroke-dashoffset: ${(props) => 408 - 408 * props.$percent};
 
     fill: none;
 
     transform-origin: center;
     transform: rotate(-90deg);
+  }
+
+  .show {
+    opacity: 1;
+  }
+
+  .hidden {
+    opacity: 0;
   }
 `;
 

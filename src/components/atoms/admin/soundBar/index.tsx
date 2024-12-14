@@ -1,8 +1,16 @@
+import { INIT_VOLUME, useYoutube } from "@/hooks/useYoutube";
 import SoundBarStyle from "./soundBar.style";
-import { InputHTMLAttributes } from "react";
+import { useState } from "react";
 
-const SoundBar = (props: InputHTMLAttributes<HTMLInputElement>) => {
-  const { value = 0, ...rest } = props;
+const SoundBar = () => {
+  const [value, setValue] = useState(INIT_VOLUME);
+  const { updateVolume } = useYoutube();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const numberValue = parseInt(e.target.value);
+    setValue(numberValue);
+    updateVolume(numberValue);
+  };
 
   const trackBackground = `linear-gradient(
       to right,
@@ -17,8 +25,8 @@ const SoundBar = (props: InputHTMLAttributes<HTMLInputElement>) => {
         min={0}
         max={100}
         step={1}
-        {...rest}
         value={value}
+        onChange={handleChange}
         $trackBackground={trackBackground}
       />
     </SoundBarStyle.Container>

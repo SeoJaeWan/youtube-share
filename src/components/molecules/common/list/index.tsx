@@ -2,161 +2,7 @@ import ListStyle from "./list.style";
 import { useEffect, useRef } from "react";
 import useTrackManager from "@/store/trackManager";
 import Item from "@/components/atoms/common/item";
-
-const list = [
-  {
-    title: "이건 노래",
-    link: "dqwd",
-  },
-  {
-    title: "untitle",
-    link: "dqwd",
-  },
-  {
-    title: "이건 노래",
-    link: "dqwd",
-  },
-  {
-    title: "untitle",
-    link: "dqwd",
-  },
-  {
-    title: "이건 노래",
-    link: "dqwd",
-  },
-  {
-    title: "untitle",
-    link: "dqwd",
-  },
-  {
-    title: "이건 노래",
-    link: "dqwd",
-  },
-  {
-    title: "untitle",
-    link: "dqwd",
-  },
-  {
-    title: "이건 노래",
-    link: "dqwd",
-  },
-  {
-    title: "untitle",
-    link: "dqwd",
-  },
-  {
-    title: "이건 노래",
-    link: "dqwd",
-  },
-  {
-    title: "untitle",
-    link: "dqwd",
-  },
-  {
-    title: "이건 노래",
-    link: "dqwd",
-  },
-  {
-    title: "untitle",
-    link: "dqwd",
-  },
-  {
-    title: "이건 노래",
-    link: "dqwd",
-  },
-  {
-    title: "untitle",
-    link: "dqwd",
-  },
-  {
-    title: "이건 노래",
-    link: "dqwd",
-  },
-  {
-    title: "untitle",
-    link: "dqwd",
-  },
-  {
-    title: "이건 노래",
-    link: "dqwd",
-  },
-  {
-    title: "untitle",
-    link: "dqwd",
-  },
-  {
-    title: "이건 노래",
-    link: "dqwd",
-  },
-  {
-    title: "untitle",
-    link: "dqwd",
-  },
-  {
-    title: "이건 노래",
-    link: "dqwd",
-  },
-  {
-    title: "untitle",
-    link: "dqwd",
-  },
-  {
-    title: "이건 노래",
-    link: "dqwd",
-  },
-  {
-    title: "untitle",
-    link: "dqwd",
-  },
-  {
-    title: "이건 노래",
-    link: "dqwd",
-  },
-  {
-    title: "untitle",
-    link: "dqwd",
-  },
-  {
-    title: "이건 노래",
-    link: "dqwd",
-  },
-  {
-    title: "untitle",
-    link: "dqwd",
-  },
-  {
-    title: "이건 노래",
-    link: "dqwd",
-  },
-  {
-    title: "untitle",
-    link: "dqwd",
-  },
-  {
-    title: "이건 노래",
-    link: "dqwd",
-  },
-  {
-    title: "untitle",
-    link: "dqwd",
-  },
-  {
-    title: "이건 노래",
-    link: "dqwd",
-  },
-  {
-    title: "untitle",
-    link: "dqwd",
-  },
-  {
-    title: "이건 노래",
-    link: "dqwd",
-  },
-  {
-    title: "untitle",
-    link: "dqwd",
-  },
-];
+import { useYoutube } from "@/hooks/useYoutube";
 
 export type ListType = "client" | "admin";
 
@@ -167,6 +13,7 @@ interface ListProps {
 const List = (props: ListProps) => {
   const { type } = props;
   const listRef = useRef<HTMLUListElement>(null);
+  const { list } = useYoutube();
 
   const { isList, delay, opacityDelay } = useTrackManager();
 
@@ -183,14 +30,7 @@ const List = (props: ListProps) => {
       className={listClass}
     >
       {list.map((item, idx) => (
-        <Item
-          key={idx}
-          title={item.title}
-          link={item.link}
-          index={idx}
-          type={type}
-          delay={delay * idx}
-        />
+        <Item {...item} index={idx} type={type} delay={delay * idx} key={idx} />
       ))}
     </ListStyle.Container>
   );
