@@ -6,8 +6,6 @@ const Container = styled.form`
   align-items: flex-end;
   justify-content: center;
 
-  gap: 20px;
-
   width: 100%;
   height: 100%;
 `;
@@ -24,13 +22,23 @@ const Label = styled.label`
   font-weight: 700;
 
   cursor: pointer;
+
+  &:first-of-type {
+    margin-bottom: 20px;
+  }
 `;
 
-const Input = styled.input`
+interface InputProps {
+  $error: boolean;
+}
+
+const Input = styled.input<InputProps>`
   width: 100%;
   height: 50px;
 
-  border: 1px solid ${(props) => props.theme.color.primary};
+  border: 1px solid
+    ${(props) =>
+      props.$error ? props.theme.color.red : props.theme.color.primary};
   border-radius: 15px;
   background-color: ${(props) => props.theme.color.white};
 
@@ -45,15 +53,25 @@ const Input = styled.input`
   &:focus::placeholder,
   &:hover::placeholder {
     outline: none;
-    background-color: ${(props) => props.theme.color.primaryBlue};
-    color: ${(props) => props.theme.color.white};
+    background-color: ${(props) =>
+      props.$error ? props.theme.color.white : props.theme.color.primaryBlue};
+    color: ${(props) =>
+      props.$error ? props.theme.color.black : props.theme.color.white};
   }
+`;
+
+const Error = styled.p`
+  height: 16px;
+
+  font-size: ${(props) => props.theme.font(14)};
+  color: ${(props) => props.theme.color.red};
 `;
 
 const MusicFormStyle = {
   Container,
   Label,
   Input,
+  Error,
 };
 
 export default MusicFormStyle;

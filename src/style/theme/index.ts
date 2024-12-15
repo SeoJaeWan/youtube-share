@@ -9,6 +9,7 @@ export const color = {
   white: "#ffffff",
   black: "#121212",
   gray: "#bdc3c7",
+  red: "#eb4d4b",
 };
 
 export const media = {
