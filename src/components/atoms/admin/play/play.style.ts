@@ -62,10 +62,6 @@ const Container = styled.button`
 
   transform-origin: center;
   transition: all 0.2s;
-
-  &:active {
-    transform: scale(0.9);
-  }
 `;
 
 const PlayStyle = {

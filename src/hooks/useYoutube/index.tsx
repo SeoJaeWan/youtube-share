@@ -5,10 +5,10 @@ import {
   PropsWithChildren,
   useCallback,
   useContext,
-  useEffect,
   useRef,
   useState,
 } from "react";
+import { useAlert } from "../useAlert";
 
 interface YoutubeContextType {
   list: HopeMusic[];
@@ -25,7 +25,7 @@ interface YoutubeContextType {
   shuffleList: (shuffle: boolean) => void;
   loopList: (loop: boolean) => void;
   addMusic: (music: HopeMusic) => void;
-  initList: (hopeMusicList: HopeMusic[]) => void;
+  initList: () => void;
   playerMusicUpdate: (hopeMusic: HopeMusic | null) => void;
   playerListUpdate: (hopeMusicList: HopeMusic[]) => void;
 }
@@ -38,12 +38,14 @@ const YoutubeProvider = (props: PropsWithChildren) => {
   const { children } = props;
   const [playing, setPlaying] = useState(false);
   const [list, setList] = useState<HopeMusic[]>([]);
+  const [current, setCurrent] = useState<HopeMusic | null>(null);
+
   const listRef = useRef<HopeMusic[]>(list);
   const originListRef = useRef<HopeMusic[]>([]);
-
-  const [current, setCurrent] = useState<HopeMusic | null>(null);
   const currentTurn = useRef(0);
   const player = useRef<YT.Player | null>(null);
+
+  const { addMessage } = useAlert();
 
   const updateList = useCallback(
     (newList: HopeMusic[], originList?: HopeMusic[]) => {
@@ -54,138 +56,132 @@ const YoutubeProvider = (props: PropsWithChildren) => {
 
       if (originList) {
         originListRef.current = originList;
+        localStorage.setItem("playList", JSON.stringify(originList));
       }
     },
     []
   );
 
-  const updateCurrent = useCallback((music: HopeMusic) => {
+  const updateCurrent = (music: HopeMusic) => {
     setCurrent(music);
     notificationMusic(music);
-  }, []);
+  };
 
-  const readyPlayer = useCallback((event: YT.PlayerEvent) => {
+  const readyPlayer = (event: YT.PlayerEvent) => {
     player.current = event.target;
     event.target.setVolume(INIT_VOLUME);
 
     player.current.playVideo();
-  }, []);
+  };
 
-  const stateChange = useCallback(
-    (event: YT.PlayerStateChangeEvent) => {
-      if (event.data === YT.PlayerState.ENDED) {
-        const loop = localStorage.getItem("loop") === "true";
-        let update = currentTurn.current + 1;
-        const list = listRef.current;
+  const stateChange = (event: YT.PlayerStateChangeEvent) => {
+    if (event.data === YT.PlayerState.ENDED) {
+      const loop = localStorage.getItem("loop") === "true";
+      let update = currentTurn.current + 1;
+      const list = listRef.current;
 
-        if (loop) {
-          update = update % list.length;
-        }
-
-        if (update !== list.length) {
-          const next = list[update];
-          updateCurrent(next);
-          currentTurn.current = update;
-          setPlayer(next.link);
-        } else {
-          setPlaying(false);
-        }
+      if (loop) {
+        update = update % list.length;
       }
 
-      if (event.data === YT.PlayerState.PAUSED) {
+      if (update !== list.length) {
+        const next = list[update];
+        updateCurrent(next);
+        currentTurn.current = update;
+        setPlayer(next.link);
+      } else {
         setPlaying(false);
       }
-
-      if (event.data === YT.PlayerState.PLAYING) {
-        setPlaying(true);
-      }
-    },
-    [updateCurrent]
-  );
-
-  const setPlayer = useCallback(
-    (link: string) => {
-      if (player.current) {
-        player.current.destroy();
-      }
-
-      new window.YT.Player("player", {
-        height: "360",
-        width: "640",
-        videoId: link,
-        events: {
-          onReady: readyPlayer,
-          onStateChange: stateChange,
-        },
-      });
-    },
-    [readyPlayer, stateChange]
-  );
-
-  const shuffleList = useCallback(
-    (shuffle: boolean) => {
-      const newList = [...originListRef.current];
-
-      if (shuffle) {
-        for (let i = newList.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [newList[i], newList[j]] = [newList[j], newList[i]];
-        }
-      }
-
-      const currentIdx = newList.findIndex(
-        (music) => music.time === current?.time
-      );
-
-      localStorage.setItem("shuffle", shuffle ? "true" : "false");
-      currentTurn.current = currentIdx;
-      updateList(newList);
-    },
-    [current, updateList]
-  );
-
-  const loopList = useCallback((loop: boolean) => {
-    localStorage.setItem("loop", loop ? "true" : "false");
-  }, []);
-
-  const updateVolume = useCallback((volume: number) => {
-    player.current!.setVolume(volume);
-  }, []);
-
-  const play = useCallback(() => {
-    if (!current) {
-      setPlayer(list[currentTurn.current].link);
-      updateCurrent(list[currentTurn.current]);
-    } else {
-      player.current!.playVideo();
     }
-  }, [current, list, updateCurrent]);
 
-  const stop = useCallback(() => {
+    if (event.data === YT.PlayerState.PAUSED) {
+      setPlaying(false);
+    }
+
+    if (event.data === YT.PlayerState.PLAYING) {
+      setPlaying(true);
+    }
+  };
+
+  const setPlayer = (link: string) => {
+    if (player.current) {
+      player.current.destroy();
+    }
+
+    new window.YT.Player("player", {
+      height: "360",
+      width: "640",
+      videoId: link,
+      events: {
+        onReady: readyPlayer,
+        onStateChange: stateChange,
+      },
+    });
+  };
+
+  const shuffleList = (shuffle: boolean) => {
+    const newList = [...originListRef.current];
+
+    if (shuffle) {
+      for (let i = newList.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newList[i], newList[j]] = [newList[j], newList[i]];
+      }
+    }
+
+    const currentIdx = newList.findIndex(
+      (music) => music.time === current?.time
+    );
+
+    localStorage.setItem("shuffle", shuffle ? "true" : "false");
+    currentTurn.current = currentIdx;
+    updateList(newList);
+  };
+
+  const loopList = (loop: boolean) => {
+    localStorage.setItem("loop", loop ? "true" : "false");
+  };
+
+  const updateVolume = (volume: number) => {
+    player.current!.setVolume(volume);
+  };
+
+  const play = () => {
+    if (list.length === 0) {
+      addMessage({
+        message: "재생할 음악이 없습니다.\n플레이리스트에 노래를 추가해주세요.",
+        type: "single",
+        onConfirm: () => {},
+      });
+    } else {
+      if (!current) {
+        setPlayer(list[currentTurn.current].link);
+        updateCurrent(list[currentTurn.current]);
+      } else {
+        player.current!.playVideo();
+      }
+    }
+  };
+
+  const stop = () => {
     player.current!.pauseVideo();
-  }, []);
+  };
 
-  const update = useCallback(
-    (idx: number) => {
-      currentTurn.current = idx;
-      setPlayer(list[idx].link);
-      updateCurrent(list[idx]);
-    },
-    [list, updateCurrent]
-  );
+  const update = (idx: number) => {
+    currentTurn.current = idx;
+    setPlayer(list[idx].link);
+    updateCurrent(list[idx]);
+  };
 
-  const remove = useCallback(
-    (time: string) => {
-      const newList = list.filter((music) => music.time !== time);
-      const originNewList = originListRef.current.filter(
-        (music) => music.time !== time
-      );
-      updateList(newList, originNewList);
-    },
-    [list, updateList]
-  );
+  const remove = (time: string) => {
+    const newList = list.filter((music) => music.time !== time);
+    const originNewList = originListRef.current.filter(
+      (music) => music.time !== time
+    );
+    updateList(newList, originNewList);
+  };
 
-  const currentTime = () => {
+  const currentTime = useCallback(() => {
     let time = 0;
 
     if (player.current) {
@@ -193,9 +189,9 @@ const YoutubeProvider = (props: PropsWithChildren) => {
     }
 
     return time;
-  };
+  }, []);
 
-  const currentDuration = () => {
+  const currentDuration = useCallback(() => {
     let duration = 0;
 
     if (player.current) {
@@ -203,7 +199,7 @@ const YoutubeProvider = (props: PropsWithChildren) => {
     }
 
     return duration;
-  };
+  }, []);
 
   const addMusic = useCallback(
     (music: HopeMusic) => {
@@ -214,12 +210,27 @@ const YoutubeProvider = (props: PropsWithChildren) => {
     [list, updateList]
   );
 
-  const initList = useCallback(
-    (hopeMusicList: HopeMusic[]) => {
-      updateList(hopeMusicList, hopeMusicList);
-    },
-    [updateList]
-  );
+  const initList = useCallback(() => {
+    const playListRaw = localStorage.getItem("playList");
+
+    if (playListRaw) {
+      const playList = JSON.parse(playListRaw);
+
+      if (Array.isArray(playList)) {
+        addMessage({
+          message:
+            "이전 플레이리스트가 존재합니다.\n플레이리스트를 불러오시겠습니까?",
+          type: "multiple",
+          onConfirm: () => {
+            updateList(playList, playList);
+          },
+          onCancel: () => {
+            localStorage.removeItem("playList");
+          },
+        });
+      }
+    }
+  }, [addMessage, updateList]);
 
   const playerMusicUpdate = useCallback((hopeMusic: HopeMusic | null) => {
     setCurrent(hopeMusic);

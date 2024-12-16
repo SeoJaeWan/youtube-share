@@ -16,7 +16,7 @@ const useTrackManager = create<TrackManagerState>()((set) => ({
   updateList: (length) =>
     set((state) => ({
       isList: !state.isList,
-      opacityDelay: Math.min(6, length) * state.delay + state.duration,
+      opacityDelay: Math.min(6, length) * state.delay,
     })),
 }));
 

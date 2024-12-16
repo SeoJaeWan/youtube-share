@@ -1,4 +1,10 @@
-import { createContext, PropsWithChildren, useContext, useState } from "react";
+import {
+  createContext,
+  PropsWithChildren,
+  useCallback,
+  useContext,
+  useState,
+} from "react";
 import AlertStyle from "./alert.style";
 
 type AlertType = "single" | "multiple";
@@ -20,8 +26,18 @@ const AlertProvider = (props: PropsWithChildren) => {
   const { children } = props;
   const [message, setMessage] = useState<AlertMessage | null>(null);
 
-  const addMessage = (message: AlertMessage) => {
+  const addMessage = useCallback((message: AlertMessage) => {
     setMessage(message);
+  }, []);
+
+  const handleConfirm = () => {
+    message!.onConfirm();
+    setMessage(null);
+  };
+
+  const handleCancel = () => {
+    message!.onCancel!();
+    setMessage(null);
   };
 
   return (
@@ -33,9 +49,13 @@ const AlertProvider = (props: PropsWithChildren) => {
           <AlertStyle.Message>{message.message}</AlertStyle.Message>
 
           <AlertStyle.ButtonBox>
-            <AlertStyle.ConfirmButton>확인</AlertStyle.ConfirmButton>
+            <AlertStyle.ConfirmButton onClick={handleConfirm}>
+              확인
+            </AlertStyle.ConfirmButton>
             {message.onCancel && (
-              <AlertStyle.CancelButton>취소</AlertStyle.CancelButton>
+              <AlertStyle.CancelButton onClick={handleCancel}>
+                취소
+              </AlertStyle.CancelButton>
             )}
           </AlertStyle.ButtonBox>
         </AlertStyle.Container>

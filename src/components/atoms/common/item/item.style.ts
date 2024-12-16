@@ -89,12 +89,6 @@ const Button = styled.button<ButtonProps>`
 
   border-radius: 50%;
 
-  transition: all 0.4s;
-
-  &:active {
-    transform: scale(0.9);
-  }
-
   &:last-of-type {
     padding-left: 1px;
   }

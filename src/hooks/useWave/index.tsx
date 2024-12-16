@@ -3,6 +3,7 @@ import { usePathname } from "next/navigation";
 import {
   createContext,
   PropsWithChildren,
+  useCallback,
   useContext,
   useEffect,
   useRef,
@@ -30,7 +31,7 @@ export const WaveProvider = (props: PropsWithChildren) => {
     ? "wave-start-ready"
     : "wave-end-ready";
 
-  const onWave = (callback?: () => void) => {
+  const onWave = useCallback((callback?: () => void) => {
     if (waveRef.current) {
       setWave(true);
 
@@ -41,7 +42,7 @@ export const WaveProvider = (props: PropsWithChildren) => {
 
       waveRef.current.addEventListener("animationend", waveAnimationEnd);
     }
-  };
+  }, []);
 
   useEffect(() => {
     setWave(false);

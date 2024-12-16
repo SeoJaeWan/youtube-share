@@ -4,11 +4,12 @@ const Container = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
+  z-index: 9999;
   transform: translate(-50%, -50%);
 
-  max-width: 540px;
+  min-width: 540px;
 
-  padding: 15px;
+  padding: 20px 15px 15px;
 
   background-color: ${(props) => props.theme.color.white};
   border-radius: 10px;
@@ -16,14 +17,15 @@ const Container = styled.div`
 
   @media (max-width: ${(props) => props.theme.media.mobile}) {
     width: 80%;
+    max-width: 80%;
   }
 `;
 
 const Message = styled.p`
   width: 100%;
 
-  font-size: ${(props) => props.theme.font(18)};
-  font-weight: 600;
+  font-size: ${(props) => props.theme.font(16)};
+  font-weight: 500;
   color: ${(props) => props.theme.color.black};
 
   white-space: pre-wrap;
@@ -39,8 +41,8 @@ const ButtonBox = styled.div`
 `;
 
 const CancelButton = styled.button`
-  width: 60px;
-  height: 40px;
+  width: 50px;
+  height: 30px;
 
   border: 1px solid ${(props) => props.theme.color.primary};
   background-color: ${(props) => props.theme.color.white};
@@ -52,8 +54,8 @@ const CancelButton = styled.button`
 `;
 
 const ConfirmButton = styled.button`
-  width: 60px;
-  height: 40px;
+  width: 50px;
+  height: 30px;
 
   border: none;
   background-color: ${(props) => props.theme.color.primary};

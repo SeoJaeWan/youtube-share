@@ -5,24 +5,34 @@ import AddMusic from "@/components/organisms/common/addMusic";
 import Controller from "@/components/molecules/client/controller";
 import { useEffect } from "react";
 import { joinRoom, playList, playMusic } from "@/socket";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import useWave from "@/hooks/useWave";
 import { useYoutube } from "@/hooks/useYoutube";
+import { useAlert } from "@/hooks/useAlert";
 
 const ClientTemplate = () => {
   const params = useParams<{ id: string }>();
+  const router = useRouter();
+
   const { onWave } = useWave();
+  const { addMessage } = useAlert();
   const { playerListUpdate, playerMusicUpdate } = useYoutube();
 
   useEffect(() => {
     joinRoom(params.id, ({ status }) => {
       if (status === "fail") {
-        alert("방이 존재하지 않습니다.");
+        addMessage({
+          message: "방이 존재하지 않습니다.",
+          type: "single",
+          onConfirm: () => {
+            router.push("/");
+          },
+        });
       } else {
         onWave();
       }
     });
-  }, [params, onWave]);
+  }, [params, router, onWave, addMessage]);
 
   useEffect(() => {
     playList(playerListUpdate);

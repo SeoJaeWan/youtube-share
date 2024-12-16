@@ -37,11 +37,17 @@ const Global = styled.createGlobalStyle`
     outline: none;
     background: none;
 
+    transition: all 0.2s;
+
     cursor: pointer;
 
     &:disabled {
       transform: none;
       cursor: default;
+    }
+
+    &:active {
+      transform: scale(0.9);
     }
   }
 
