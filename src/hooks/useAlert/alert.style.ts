@@ -1,25 +1,4 @@
-import styled from "styled-components";
-
-const Container = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-
-  min-width: 540px;
-
-  padding: 20px 15px 15px;
-
-  background-color: ${(props) => props.theme.color.white};
-  border-radius: 10px;
-  border: 1px solid ${(props) => props.theme.color.primary};
-
-  @media (max-width: ${(props) => props.theme.media.mobile}) {
-    width: 80%;
-    max-width: 80%;
-  }
-`;
+import styled, { keyframes } from "styled-components";
 
 const Message = styled.p`
   width: 100%;
@@ -66,8 +45,75 @@ const ConfirmButton = styled.button`
   color: ${(props) => props.theme.color.white};
 `;
 
+const show = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.5);
+  }
+  5% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.2);
+  }
+  10% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) scale(1);
+  }
+`;
+
+const NotificationContainer = styled.div`
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.5);
+  z-index: 9999;
+
+  padding: 15px;
+
+  background-color: ${(props) => props.theme.color.primary};
+  border-radius: 10px;
+
+  animation: ${show} 3s linear forwards;
+
+  ${Message} {
+    margin-bottom: 0;
+
+    color: ${(props) => props.theme.color.white};
+  }
+
+  @media (max-width: ${(props) => props.theme.media.mobile}) {
+    width: 80%;
+    max-width: 80%;
+  }
+`;
+
+const AlertContainer = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+
+  min-width: 540px;
+
+  padding: 20px 15px 15px;
+
+  background-color: ${(props) => props.theme.color.white};
+  border-radius: 10px;
+  border: 1px solid ${(props) => props.theme.color.primary};
+
+  @media (max-width: ${(props) => props.theme.media.mobile}) {
+    width: 80%;
+    max-width: 80%;
+  }
+`;
+
 const AlertStyle = {
-  Container,
+  NotificationContainer,
+  AlertContainer,
   Message,
   ButtonBox,
   CancelButton,

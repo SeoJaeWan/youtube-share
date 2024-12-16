@@ -37,10 +37,14 @@ const createSocket = (io: Server) => {
         return socket.emit("enter", { id, status: "fail" });
       }
 
+      const admin = Array.from(ids)[0];
+
       socket.join(id);
       socket.emit("enter", { id, status: "success" });
 
       room = id;
+
+      io.to(admin).emit("join");
     });
 
     socket.on("check", () => {

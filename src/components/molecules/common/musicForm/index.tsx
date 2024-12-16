@@ -2,6 +2,7 @@ import Button from "@/components/atoms/common/button";
 import MusicFormStyle from "./musicForm.style";
 import useMusicForm from "@/hooks/useMusicForm";
 import { addList } from "@/socket";
+import { useAlert } from "@/hooks/useAlert";
 
 const MusicForm = () => {
   const {
@@ -11,6 +12,7 @@ const MusicForm = () => {
     handleSubmitForm,
     reset,
   } = useMusicForm();
+  const { addMessage } = useAlert();
 
   const handleSubmit = (data: {
     link: string;
@@ -19,6 +21,10 @@ const MusicForm = () => {
   }) => {
     const { title, link, time } = data;
     addList({ title, link, time });
+    addMessage({
+      message: "음악이 추가되었습니다.",
+      type: "notification",
+    });
     reset();
   };
 

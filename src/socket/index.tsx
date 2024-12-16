@@ -22,6 +22,14 @@ const joinRoom = (
   socket.on("enter", callback);
 };
 
+const observeJoin = (callback: () => void) => {
+  socket.on("join", callback);
+};
+
+const observeJoinOff = () => {
+  socket.off("join");
+};
+
 const check = (callback: (check: boolean) => void) => {
   socket.emit("check");
   socket.on("checked", callback);
@@ -33,6 +41,10 @@ const addList = (hopeMusic: HopeMusic) => {
 
 const addedList = (callback: (hopeMusic: HopeMusic) => void) => {
   socket.on("addedList", callback);
+};
+
+const addedListOff = () => {
+  socket.off("addedList");
 };
 
 const notificationList = (hopeMusicList: HopeMusic[]) => {
@@ -58,6 +70,7 @@ const bombRoom = (callback: () => void) => {
 export {
   createRoom,
   joinRoom,
+  observeJoin,
   check,
   addList,
   addedList,
@@ -66,4 +79,6 @@ export {
   notificationMusic,
   playMusic,
   bombRoom,
+  observeJoinOff,
+  addedListOff,
 };

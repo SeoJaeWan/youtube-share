@@ -3,16 +3,18 @@ import {
   PropsWithChildren,
   useCallback,
   useContext,
+  useRef,
   useState,
 } from "react";
 import AlertStyle from "./alert.style";
 
-type AlertType = "single" | "multiple";
+type AlertType = "single" | "multiple" | "notification";
 
 interface AlertMessage {
   message: string;
   type: AlertType;
-  onConfirm: () => void;
+  time?: number;
+  onConfirm?: () => void;
   onCancel?: () => void;
 }
 
@@ -24,41 +26,63 @@ const AlertContext = createContext<AlertContextType | null>(null);
 
 const AlertProvider = (props: PropsWithChildren) => {
   const { children } = props;
-  const [message, setMessage] = useState<AlertMessage | null>(null);
+  const [messageList, setMessageList] = useState<AlertMessage[]>([]);
+  const deleteRef = useRef<NodeJS.Timeout | null>(null);
 
   const addMessage = useCallback((message: AlertMessage) => {
-    setMessage(message);
+    clearTimeout(deleteRef.current!);
+    setMessageList((prev) => [{ ...message, time: Date.now() }, ...prev]);
+
+    if (message.type === "notification") {
+      deleteRef.current = setTimeout(() => {
+        setMessageList((prev) =>
+          prev.filter(({ type }) => type !== "notification")
+        );
+      }, 3000);
+    }
   }, []);
 
-  const handleConfirm = () => {
-    message!.onConfirm();
-    setMessage(null);
+  const handleConfirm = (time: number, confirm?: () => void) => {
+    if (confirm) {
+      confirm();
+    }
+    setMessageList((prev) => prev.filter((message) => message.time !== time));
   };
 
-  const handleCancel = () => {
-    message!.onCancel!();
-    setMessage(null);
+  const handleCancel = (time: number, cancel: () => void) => {
+    cancel();
+    setMessageList((prev) => prev.filter((message) => message.time !== time));
   };
 
   return (
     <AlertContext.Provider value={{ addMessage }}>
       {children}
 
-      {message && (
-        <AlertStyle.Container>
-          <AlertStyle.Message>{message.message}</AlertStyle.Message>
+      {messageList.map((message) =>
+        message.type === "notification" ? (
+          <AlertStyle.NotificationContainer key={message.time}>
+            <AlertStyle.Message>{message.message}</AlertStyle.Message>
+          </AlertStyle.NotificationContainer>
+        ) : (
+          <AlertStyle.AlertContainer key={message.time}>
+            <AlertStyle.Message>{message.message}</AlertStyle.Message>
 
-          <AlertStyle.ButtonBox>
-            <AlertStyle.ConfirmButton onClick={handleConfirm}>
-              확인
-            </AlertStyle.ConfirmButton>
-            {message.onCancel && (
-              <AlertStyle.CancelButton onClick={handleCancel}>
-                취소
-              </AlertStyle.CancelButton>
-            )}
-          </AlertStyle.ButtonBox>
-        </AlertStyle.Container>
+            <AlertStyle.ButtonBox>
+              <AlertStyle.ConfirmButton
+                onClick={() => handleConfirm(message.time!, message.onConfirm)}
+              >
+                확인
+              </AlertStyle.ConfirmButton>
+              {message.onCancel && (
+                <AlertStyle.CancelButton
+                  onClick={() => handleCancel(message.time!, message.onCancel!)}
+                >
+                  취소
+                </AlertStyle.CancelButton>
+              )}
+            </AlertStyle.ButtonBox>
+          </AlertStyle.AlertContainer>
+        )
       )}
     </AlertContext.Provider>
   );

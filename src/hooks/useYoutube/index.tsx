@@ -151,7 +151,6 @@ const YoutubeProvider = (props: PropsWithChildren) => {
       addMessage({
         message: "재생할 음악이 없습니다.\n플레이리스트에 노래를 추가해주세요.",
         type: "single",
-        onConfirm: () => {},
       });
     } else {
       if (!current) {

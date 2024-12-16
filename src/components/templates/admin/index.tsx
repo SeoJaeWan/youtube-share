@@ -3,7 +3,15 @@ import AdminStyle from "./admin.style";
 import List from "@/components/molecules/common/list";
 import AddMusic from "@/components/organisms/common/addMusic";
 import { useEffect } from "react";
-import { addedList, check } from "@/socket";
+import {
+  addedList,
+  addedListOff,
+  check,
+  notificationList,
+  notificationMusic,
+  observeJoin,
+  observeJoinOff,
+} from "@/socket";
 import useWave from "@/hooks/useWave";
 import { useYoutube } from "@/hooks/useYoutube";
 import { useAlert } from "@/hooks/useAlert";
@@ -12,7 +20,7 @@ import { useRouter } from "next/navigation";
 const AdminTemplate = () => {
   const router = useRouter();
   const { onWave } = useWave();
-  const { initList, addMusic } = useYoutube();
+  const { list, current, initList, addMusic } = useYoutube();
   const { addMessage } = useAlert();
 
   useEffect(() => {
@@ -34,7 +42,16 @@ const AdminTemplate = () => {
 
   useEffect(() => {
     addedList(addMusic);
-  }, [addMusic]);
+    observeJoin(() => {
+      notificationList(list);
+      notificationMusic(current);
+    });
+
+    return () => {
+      addedListOff();
+      observeJoinOff();
+    };
+  }, [list, current, addMusic]);
 
   return (
     <AdminStyle.Container>

@@ -51,6 +51,7 @@ const Global = styled.createGlobalStyle`
     }
   }
 
+  #form,
   #player {
     display: none;
   }
