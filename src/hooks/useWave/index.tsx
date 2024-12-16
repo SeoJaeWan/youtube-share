@@ -11,7 +11,7 @@ import {
 import WaveStyle from "./wave.style";
 
 interface WaveContextValue {
-  onWave: (callback: () => void) => void;
+  onWave: (callback?: () => void) => void;
 }
 
 const WaveContext = createContext<WaveContextValue | null>(null);
@@ -22,14 +22,20 @@ export const WaveProvider = (props: PropsWithChildren) => {
   const [wave, setWave] = useState(false);
   const waveRef = useRef<HTMLDivElement>(null);
 
-  const waveAni = path === "/" ? (wave ? "wave-start" : "") : "wave-end";
+  const waveAni = wave
+    ? path === "/"
+      ? "wave-start"
+      : "wave-end"
+    : path === "/"
+    ? "wave-start-ready"
+    : "wave-end-ready";
 
-  const onWave = (callback: () => void) => {
+  const onWave = (callback?: () => void) => {
     if (waveRef.current) {
       setWave(true);
 
       const waveAnimationEnd = () => {
-        callback();
+        if (callback) callback();
         waveRef.current!.removeEventListener("animationend", waveAnimationEnd);
       };
 

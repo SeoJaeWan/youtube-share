@@ -4,14 +4,17 @@ import HomeStyle from "./home.style";
 import Button from "@/components/atoms/common/button";
 import useWave from "@/hooks/useWave";
 import { useRouter } from "next/navigation";
+import { createRoom } from "@/socket";
 
 const HomeTemplate = () => {
   const { onWave } = useWave();
   const router = useRouter();
 
-  const handleClickPlaying = () => {
-    onWave(() => {
-      router.push("/admin/123");
+  const handleCreateRoom = () => {
+    createRoom(({ id }: { id: string }) => {
+      onWave(() => {
+        router.push(`/admin/${id}`);
+      });
     });
   };
 
@@ -20,7 +23,7 @@ const HomeTemplate = () => {
       <Logo />
 
       <HomeStyle.FadeButton>
-        <Button effect onClick={handleClickPlaying}>
+        <Button effect onClick={handleCreateRoom}>
           Playing
         </Button>
       </HomeStyle.FadeButton>

@@ -1,34 +1,58 @@
-import { Server, Socket } from "socket.io";
+import { Server } from "socket.io";
 import { getUserList } from "./utils/socketUtils";
 import { HopeMusic } from "../types/global";
 
 const createSocket = (io: Server) => {
   io.on("connection", (socket) => {
-    const rooms = [] as Socket[];
     let room: string = "";
 
+    const getId = () => {
+      let id;
+
+      do {
+        id = Math.random().toString(36).substr(2, 9);
+      } while (
+        io.sockets.adapter.rooms.get(id) &&
+        io.sockets.adapter.rooms.get(id)!.size > 0
+      );
+
+      return id;
+    };
+
     socket.on("create", () => {
-      const id = Math.random().toString(36).substr(2, 9);
+      const id = getId();
 
       socket.join(id);
-      io.to(id).emit("users", 1);
+      socket.emit("enter", { id, status: "success" });
 
       room = id;
     });
 
     socket.on("join", (id) => {
-      rooms.length = 0;
-
       const ids = io.sockets.adapter.rooms.get(id);
 
       if (!ids || ids.size < 0) {
-        return socket.emit("no_room", id);
+        return socket.emit("enter", { id, status: "fail" });
       }
 
       socket.join(id);
-      io.to(id).emit("users", ids.size + 1);
+      socket.emit("enter", { id, status: "success" });
 
       room = id;
+    });
+
+    socket.on("check", () => {
+      const ids = io.sockets.adapter.rooms.get(room)!;
+
+      if (room) {
+        const firstId = Array.from(ids)[0];
+
+        if (socket.id === firstId) {
+          return socket.emit("checked", true);
+        }
+      }
+
+      socket.emit("checked", false);
     });
 
     socket.on("disconnect", () => {
@@ -41,23 +65,24 @@ const createSocket = (io: Server) => {
       }
     });
 
-    socket.on(
-      "addList",
-      async ({ hopeMusic, id }: { hopeMusic: HopeMusic; id: string }) => {
-        const userList = await getUserList(io, id);
+    socket.on("addList", async (hopeMusic: HopeMusic) => {
+      const userList = await getUserList(io, room);
 
-        if (userList.length < 0) {
-          return socket.emit("no_room", id);
-        }
-
-        const adminId = userList[0];
-
-        io.to(adminId).emit("addList", hopeMusic);
+      if (userList.length < 0) {
+        return socket.emit("no_room", room);
       }
-    );
 
-    socket.on("playList", (playingList: HopeMusic[]) => {
+      const adminId = userList[0];
+
+      io.to(adminId).emit("addedList", hopeMusic);
+    });
+
+    socket.on("updateList", (playingList: HopeMusic[]) => {
       io.to(room).emit("playList", playingList);
+    });
+
+    socket.on("updateMusic", (hopeMusic: HopeMusic) => {
+      io.to(room).emit("playMusic", hopeMusic);
     });
   });
 };

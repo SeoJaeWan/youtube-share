@@ -8,6 +8,10 @@ const Container = styled.form`
 
   width: 100%;
   height: 100%;
+
+  #form {
+    display: none;
+  }
 `;
 
 const Label = styled.label`

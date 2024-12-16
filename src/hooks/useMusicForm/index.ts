@@ -4,45 +4,63 @@ const useMusicForm = () => {
   const form = useForm({
     mode: "onChange",
     defaultValues: {
-      title: "",
       link: "",
     },
-  });
-
-  const titleRegister = form.register("title", {
-    required: { value: true, message: "제목을 입력해주세요." },
   });
 
   const linkRegister = form.register("link", {
     required: { value: true, message: "링크를 입력해주세요." },
     pattern: {
-      value: /^https:\/\/www\.youtube\.com\/watch\?v=[a-zA-Z0-9_-]+$/,
+      value: /^https:\/\/www\.youtube\.com\/watch\?v=[a-zA-Z0-9_-]/,
       message: "유효한 링크를 입력해주세요.",
     },
   });
 
   const error = form.formState.errors;
 
-  const titleError = error.title;
   const linkError = error.link;
 
   const handleSubmitForm = (
-    submit: ({ title, link }: { title: string; link: string }) => void
+    submit: ({
+      title,
+      link,
+    }: {
+      title: string;
+      link: string;
+      time: string;
+    }) => void
   ) =>
     form.handleSubmit((data) => {
-      const title = data.title;
-      const link = data.link.split("v=")[1];
+      const link = data.link.match(/v=([^&]+)/)![1];
+      const time = Date.now().toString();
 
-      submit({ title, link });
+      const formEl = document.createElement("div");
+      formEl.id = "form";
+
+      document.body.appendChild(formEl);
+
+      new window.YT.Player("form", {
+        height: "360",
+        width: "640",
+        videoId: link,
+        events: {
+          onReady: (event) => {
+            submit({ title: event.target.videoTitle, link, time });
+
+            event.target.destroy();
+            document.body.removeChild(formEl);
+            formEl.remove();
+          },
+        },
+      });
     });
 
   return {
-    titleRegister,
     linkRegister,
-    titleError,
     linkError,
     //
     handleSubmitForm,
+    reset: form.reset,
   };
 };
 

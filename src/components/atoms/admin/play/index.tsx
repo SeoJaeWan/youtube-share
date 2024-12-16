@@ -3,7 +3,8 @@ import PlayStyle from "./play.style";
 import { useEffect, useState } from "react";
 
 const Play = () => {
-  const { playing, play, stop, currentDuration, currentTime } = useYoutube();
+  const { playing, current, play, stop, currentDuration, currentTime } =
+    useYoutube();
   const [percent, setPercent] = useState(0);
 
   const handleClick = () => {
@@ -26,7 +27,7 @@ const Play = () => {
     return () => {
       clearInterval(interval);
     };
-  }, [playing, currentDuration, currentTime]);
+  }, [playing, current, currentDuration, currentTime]);
 
   return (
     <PlayStyle.Container onClick={handleClick}>

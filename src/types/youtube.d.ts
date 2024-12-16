@@ -43,6 +43,7 @@ declare global {
       getDuration(): number;
       getCurrentTime(): number;
       clearVideo(): void;
+      destroy(): void;
       videoTitle: string;
     }
   }

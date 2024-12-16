@@ -37,12 +37,20 @@ const Container = styled.div`
   transform: translateY(120%);
 
   &.wave-start {
-    animation: ${waveStart} 4s linear forwards;
+    animation: ${waveStart} 2s linear forwards;
   }
 
   &.wave-end {
     transform: translateY(0%);
-    animation: ${waveEnd} 4s linear forwards;
+    animation: ${waveEnd} 2s linear forwards;
+  }
+
+  &.wave-start-ready {
+    transform: translateY(120%);
+  }
+
+  &.wave-end-ready {
+    transform: translateY(0%);
   }
 `;
 

@@ -10,7 +10,7 @@ const Container = styled.main`
   overflow: hidden;
   margin: 0 auto;
 
-  background-color: ${({ theme }) => theme.color.main};
+  background-color: ${({ theme }) => theme.color.white};
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
 `;
 
