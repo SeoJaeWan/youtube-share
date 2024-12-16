@@ -30,7 +30,7 @@ const AdminTemplate = () => {
         initList();
       }
     });
-  }, [router, onWave, addMessage]);
+  }, [router, initList, onWave, addMessage]);
 
   useEffect(() => {
     addedList(addMusic);

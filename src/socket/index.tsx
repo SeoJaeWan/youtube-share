@@ -27,10 +27,6 @@ const check = (callback: (check: boolean) => void) => {
   socket.on("checked", callback);
 };
 
-const disconnect = () => {
-  socket.disconnect();
-};
-
 const addList = (hopeMusic: HopeMusic) => {
   socket.emit("addList", hopeMusic);
 };
@@ -55,15 +51,19 @@ const playMusic = (callback: (hopeMusic: HopeMusic | null) => void) => {
   socket.on("playMusic", callback);
 };
 
+const bombRoom = (callback: () => void) => {
+  socket.on("bomb", callback);
+};
+
 export {
   createRoom,
   joinRoom,
   check,
-  disconnect,
   addList,
   addedList,
   notificationList,
   playList,
   notificationMusic,
   playMusic,
+  bombRoom,
 };

@@ -5,6 +5,7 @@ import { HopeMusic } from "../types/global";
 const createSocket = (io: Server) => {
   io.on("connection", (socket) => {
     let room: string = "";
+    let isAdmin: boolean = false;
 
     const getId = () => {
       let id;
@@ -25,6 +26,7 @@ const createSocket = (io: Server) => {
       socket.join(id);
       socket.emit("enter", { id, status: "success" });
 
+      isAdmin = true;
       room = id;
     });
 
@@ -57,11 +59,17 @@ const createSocket = (io: Server) => {
 
     socket.on("disconnect", () => {
       if (room) {
-        const ids = io.sockets.adapter.rooms.get(room)!;
-        io.to(room).emit("users", ids.size - 1);
+        const ids = io.sockets.adapter.rooms.get(room);
+        if (ids) {
+          if (isAdmin) {
+            io.to(room).emit("bomb");
 
-        socket.leave(room);
-        room = "";
+            ids.forEach((id) => {
+              io.sockets.sockets.get(id)!.leave(room);
+            });
+          }
+          room = "";
+        }
       }
     });
 

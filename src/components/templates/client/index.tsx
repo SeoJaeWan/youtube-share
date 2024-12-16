@@ -4,7 +4,7 @@ import ClientStyle from "./client.style";
 import AddMusic from "@/components/organisms/common/addMusic";
 import Controller from "@/components/molecules/client/controller";
 import { useEffect } from "react";
-import { joinRoom, playList, playMusic } from "@/socket";
+import { bombRoom, joinRoom, playList, playMusic } from "@/socket";
 import { useParams, useRouter } from "next/navigation";
 import useWave from "@/hooks/useWave";
 import { useYoutube } from "@/hooks/useYoutube";
@@ -37,7 +37,16 @@ const ClientTemplate = () => {
   useEffect(() => {
     playList(playerListUpdate);
     playMusic(playerMusicUpdate);
-  }, [playerListUpdate, playerMusicUpdate]);
+    bombRoom(() => {
+      addMessage({
+        message: "방장이 방을 나갔습니다.",
+        type: "single",
+        onConfirm: () => {
+          router.push("/");
+        },
+      });
+    });
+  }, [router, playerListUpdate, playerMusicUpdate, addMessage]);
 
   return (
     <ClientStyle.Container>
