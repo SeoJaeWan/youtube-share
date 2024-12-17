@@ -5,6 +5,7 @@ import {
   PropsWithChildren,
   useCallback,
   useContext,
+  useEffect,
   useRef,
   useState,
 } from "react";
@@ -237,6 +238,14 @@ const YoutubeProvider = (props: PropsWithChildren) => {
 
   const playerListUpdate = useCallback((hopeMusicList: HopeMusic[]) => {
     setList(hopeMusicList);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (player.current) {
+        player.current.destroy();
+      }
+    };
   }, []);
 
   return (

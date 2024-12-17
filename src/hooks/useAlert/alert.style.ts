@@ -71,6 +71,8 @@ const NotificationContainer = styled.div`
   transform: translateX(-50%) scale(0.5);
   z-index: 9999;
 
+  width: 200px;
+
   padding: 15px;
 
   background-color: ${(props) => props.theme.color.primary};
@@ -82,11 +84,7 @@ const NotificationContainer = styled.div`
     margin-bottom: 0;
 
     color: ${(props) => props.theme.color.white};
-  }
-
-  @media (max-width: ${(props) => props.theme.media.mobile}) {
-    width: 80%;
-    max-width: 80%;
+    text-align: center;
   }
 `;
 
@@ -107,7 +105,7 @@ const AlertContainer = styled.div`
 
   @media (max-width: ${(props) => props.theme.media.mobile}) {
     width: 80%;
-    max-width: 80%;
+    min-width: auto;
   }
 `;
 

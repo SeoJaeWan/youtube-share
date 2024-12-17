@@ -5,12 +5,10 @@ import AddMusic from "@/components/organisms/common/addMusic";
 import { useEffect } from "react";
 import {
   addedList,
-  addedListOff,
   check,
   notificationList,
   notificationMusic,
   observeJoin,
-  observeJoinOff,
 } from "@/socket";
 import useWave from "@/hooks/useWave";
 import { useYoutube } from "@/hooks/useYoutube";
@@ -46,11 +44,6 @@ const AdminTemplate = () => {
       notificationList(list);
       notificationMusic(current);
     });
-
-    return () => {
-      addedListOff();
-      observeJoinOff();
-    };
   }, [list, current, addMusic]);
 
   return (
