@@ -1,3 +1,4 @@
+"use client";
 import Controller from "@/components/molecules/admin/controller";
 import AdminStyle from "./admin.style";
 import List from "@/components/molecules/common/list";
