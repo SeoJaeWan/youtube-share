@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  rhythm-up:
+    image: sjw7324/rhythm-up:latest
+    container_name: rhythm-up
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - shared_network
+
+networks:
+  shared_network:
+    external: true
