@@ -27,8 +27,10 @@ const Label = styled.label`
 
   cursor: pointer;
 
-  &:first-of-type {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
+
+  @media (max-width: ${(props) => props.theme.media.mobile}) {
+    margin-bottom: 10px;
   }
 `;
 

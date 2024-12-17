@@ -8,7 +8,7 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
 
-  padding: 25px;
+  padding: 25px 15px;
 
   background-color: ${(props) => props.theme.color.primary};
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
@@ -52,6 +52,10 @@ const MusicTitle = styled.h1`
   font-weight: 600;
 
   color: ${(props) => props.theme.color.white};
+
+  @media (max-width: ${(props) => props.theme.media.mobile}) {
+    font-size: ${(props) => props.theme.font(24)};
+  }
 `;
 
 const ControllerStyle = {

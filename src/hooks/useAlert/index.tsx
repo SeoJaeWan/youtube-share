@@ -46,6 +46,7 @@ const AlertProvider = (props: PropsWithChildren) => {
     if (confirm) {
       confirm();
     }
+
     setMessageList((prev) => prev.filter((message) => message.time !== time));
   };
 
@@ -58,7 +59,7 @@ const AlertProvider = (props: PropsWithChildren) => {
     <AlertContext.Provider value={{ addMessage }}>
       {children}
 
-      {messageList.map((message) =>
+      {[...messageList].reverse().map((message) =>
         message.type === "notification" ? (
           <AlertStyle.NotificationContainer key={message.time}>
             <AlertStyle.Message>{message.message}</AlertStyle.Message>

@@ -54,6 +54,10 @@ const Button = styled.button`
 
   color: white;
   font-size: ${(props) => props.theme.font(20)};
+
+  @media (max-width: ${(props) => props.theme.media.mobile}) {
+    font-size: ${(props) => props.theme.font(16)};
+  }
 `;
 
 const ButtonStyle = {

@@ -70,7 +70,7 @@ const Wave = styled.svg`
   transform: translateY(-100%);
 
   use {
-    animation: ${waveMove} 2s linear infinite;
+    animation: ${waveMove} 1s linear infinite;
     fill: ${({ theme }) => theme.color.primary};
   }
 
