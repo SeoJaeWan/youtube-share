@@ -45,6 +45,7 @@ const YoutubeProvider = (props: PropsWithChildren) => {
   const originListRef = useRef<HopeMusic[]>([]);
   const currentTurn = useRef(0);
   const player = useRef<YT.Player | null>(null);
+  const volume = useRef(INIT_VOLUME);
 
   const { addMessage } = useAlert();
 
@@ -70,7 +71,7 @@ const YoutubeProvider = (props: PropsWithChildren) => {
 
   const readyPlayer = (event: YT.PlayerEvent) => {
     player.current = event.target;
-    event.target.setVolume(INIT_VOLUME);
+    event.target.setVolume(volume.current);
 
     player.current.playVideo();
   };
@@ -89,7 +90,7 @@ const YoutubeProvider = (props: PropsWithChildren) => {
         const next = list[update];
         updateCurrent(next);
         currentTurn.current = update;
-        setPlayer(next.link);
+        player.current!.loadVideoById(next.link);
       } else {
         setPlaying(false);
       }
@@ -143,8 +144,9 @@ const YoutubeProvider = (props: PropsWithChildren) => {
     localStorage.setItem("loop", loop ? "true" : "false");
   };
 
-  const updateVolume = (volume: number) => {
-    player.current!.setVolume(volume);
+  const updateVolume = (vol: number) => {
+    player.current!.setVolume(vol);
+    volume.current = vol;
   };
 
   const play = () => {
