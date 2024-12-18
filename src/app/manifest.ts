@@ -11,6 +11,18 @@ const manifest = (): MetadataRoute.Manifest => {
     display: "standalone",
     background_color: color.white,
     theme_color: color.primary,
+    icons: [
+      {
+        src: "/assets/common/icon-192x192.png",
+        sizes: "192x192",
+        type: "image/png",
+      },
+      {
+        src: "/assets/common/icon-512x512.png",
+        sizes: "512x512",
+        type: "image/png",
+      },
+    ],
   };
 };
 
