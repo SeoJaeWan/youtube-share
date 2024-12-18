@@ -10,7 +10,6 @@ export const metadata = {
     title: `Rhythm Up - 참가자`,
     description: "초대가 왔어요! 노동요를 함께 만들어보세요.",
     type: "website",
-    url: client,
     images: { url: `${client}/assets/common/image.png` },
   },
   twitter: {
