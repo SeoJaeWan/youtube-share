@@ -3,7 +3,9 @@
 import { HopeMusic } from "@/types/global";
 import { io } from "socket.io-client";
 
-const socket = io();
+const socket = io({
+  transports: ["websocket"],
+});
 
 socket.connect();
 
