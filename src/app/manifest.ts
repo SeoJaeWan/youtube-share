@@ -9,8 +9,8 @@ const manifest = (): MetadataRoute.Manifest => {
       "혼자 관리하는 노동요는 그만! 함께 즐거운 노동요를 만들어보세요.",
     start_url: "/",
     display: "standalone",
-    background_color: color.white,
-    theme_color: color.primary,
+    background_color: "transparent",
+    theme_color: color.secondary,
     icons: [
       {
         src: "/assets/common/icon-192x192.png",
