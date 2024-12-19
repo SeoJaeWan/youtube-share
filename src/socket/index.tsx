@@ -3,15 +3,9 @@
 import { HopeMusic } from "@/types/global";
 import { io } from "socket.io-client";
 
-const socket = io("127.0.0.1:3001", {
-  transports: ["websocket"],
-});
+const socket = io();
 
 socket.connect();
-
-socket.on("connect", () => {
-  console.log("socket connected");
-});
 
 const createRoom = (
   callback: ({ id, status }: { id: string; status: string }) => void
