@@ -18,9 +18,7 @@ app.prepare().then(() => {
 
   httpServer.listen(port);
 
-  const io = new Server(httpServer, {
-    transports: ["websocket"],
-  });
+  const io = new Server(httpServer);
   createSocket(io);
 
   console.log(
