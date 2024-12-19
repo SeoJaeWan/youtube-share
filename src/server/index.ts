@@ -16,10 +16,15 @@ app.prepare().then(() => {
     handle(req, res, parsedUrl);
   });
 
-  httpServer.listen(port);
-
-  const io = new Server(httpServer);
+  const io = new Server(httpServer, {
+    cors: {
+      origin: "http://rhythm-um.seojaewan.com",
+      methods: ["GET", "POST"],
+    },
+  });
   createSocket(io);
+
+  httpServer.listen(port);
 
   console.log(
     `> Server listening at http://localhost:${port} as ${
