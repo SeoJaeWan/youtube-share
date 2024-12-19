@@ -1,3 +1,4 @@
+import { color } from "@/style/theme";
 import { Metadata } from "next";
 
 const client = process.env.NEXT_PUBLIC_CLIENT;
@@ -24,6 +25,14 @@ const createMeta = ({
     description,
     card: "summary_large_image",
     images: { url: `${client}/assets/common/image.png` },
+  },
+  manifest: "/manifest.json",
+  themeColor: color.secondary,
+  applicationName: "Rhythm Up",
+  appleWebApp: {
+    capable: true,
+    title: `Rhythm Up`,
+    statusBarStyle: "default",
   },
 });
 
