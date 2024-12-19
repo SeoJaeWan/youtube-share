@@ -18,13 +18,7 @@ app.prepare().then(() => {
 
   httpServer.listen(port);
 
-  const io = new Server(httpServer, {
-    cors: {
-      origin: "127.0.0.1:3001",
-      methods: ["GET", "POST"],
-    },
-  });
-
+  const io = new Server(httpServer);
   createSocket(io);
 
   console.log(
