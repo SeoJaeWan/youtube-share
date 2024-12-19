@@ -3,7 +3,9 @@
 import { HopeMusic } from "@/types/global";
 import { io } from "socket.io-client";
 
-const socket = io();
+const socketUrl = process.env.NEXT_PUBLIC_CLIENT;
+
+const socket = io(socketUrl);
 
 socket.connect();
 

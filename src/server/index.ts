@@ -16,12 +16,7 @@ app.prepare().then(() => {
     handle(req, res, parsedUrl);
   });
 
-  const io = new Server(httpServer, {
-    cors: {
-      origin: "http://rhythm-um.seojaewan.com",
-      methods: ["GET", "POST"],
-    },
-  });
+  const io = new Server(httpServer);
   createSocket(io);
 
   httpServer.listen(port);
