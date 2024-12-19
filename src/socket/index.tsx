@@ -9,6 +9,10 @@ const socket = io({
 
 socket.connect();
 
+socket.on("connect", () => {
+  console.log("socket connected");
+});
+
 const createRoom = (
   callback: ({ id, status }: { id: string; status: string }) => void
 ) => {
