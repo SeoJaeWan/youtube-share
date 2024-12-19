@@ -16,7 +16,9 @@ app.prepare().then(() => {
     handle(req, res, parsedUrl);
   });
 
-  const io = new Server(httpServer);
+  const io = new Server(httpServer, {
+    allowUpgrades: true,
+  });
   createSocket(io);
 
   httpServer.listen(port);
