@@ -11,7 +11,8 @@ const useMusicForm = () => {
   const linkRegister = form.register("link", {
     required: { value: true, message: "링크를 입력해주세요." },
     pattern: {
-      value: /^https:\/\/www\.youtube\.com\/watch\?v=[a-zA-Z0-9_-]/,
+      value:
+        /^(https:\/\/(www\.)?youtube\.com\/watch\?v=[a-zA-Z0-9_-]+|https:\/\/youtu\.be\/[a-zA-Z0-9_-]+)(\?[^ ]*)?$/,
       message: "유효한 링크를 입력해주세요.",
     },
   });
@@ -31,8 +32,12 @@ const useMusicForm = () => {
     }) => void
   ) =>
     form.handleSubmit((data) => {
-      const link = data.link.match(/v=([^&]+)/)![1];
+      const match =
+        data.link.match(/v=([^&]+)/) ||
+        data.link.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
       const time = Date.now().toString();
+
+      const link = match![1];
 
       const formEl = document.createElement("div");
       formEl.id = "form";
