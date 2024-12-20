@@ -1,32 +1,18 @@
-import type { NextConfig } from "next";
+import withPWA from "next-pwa";
 
-const nextConfig: NextConfig = {
+const config = {
   /* config options here */
-  async headers() {
-    return [
-      {
-        source: "/(.*)",
-        headers: [
-          {
-            key: "X-Content-Type-Options",
-            value: "nosniff",
-          },
-          {
-            key: "X-Frame-Options",
-            value: "DENY",
-          },
-          {
-            key: "Referrer-Policy",
-            value: "strict-origin-when-cross-origin",
-          },
-        ],
-      },
-    ];
-  },
   compiler: {
     styledComponents: true,
   },
   reactStrictMode: false,
 };
+
+const nextConfig = withPWA({
+  dest: "public",
+  register: true,
+  skipWaiting: true,
+  runtimeCaching: [],
+})(config);
 
 export default nextConfig;
