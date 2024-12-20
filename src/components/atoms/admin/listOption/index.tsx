@@ -1,12 +1,13 @@
 "use client";
-import Image from "next/image";
+import { color } from "@/style/theme";
 import ListOptionStyle from "./listOption.style";
 import { useEffect, useState } from "react";
+import { TiLink, TiArrowShuffle, TiArrowLoop } from "react-icons/ti";
 
 const Img = {
-  link: { src: "/assets/controller/link.svg", alt: "링크 공유" },
-  loop: { src: "/assets/controller/loop.svg", alt: "반복 재생" },
-  shuffle: { src: "/assets/controller/shuffle.svg", alt: "셔플 재생" },
+  link: { Image: TiLink, size: 22 },
+  loop: { Image: TiArrowShuffle, size: 20 },
+  shuffle: { Image: TiArrowLoop, size: 20 },
 };
 
 interface ListOptionProps {
@@ -19,8 +20,7 @@ const ListOption = (props: ListOptionProps) => {
   const { type, isActive, onClick } = props;
   const [active, setActive] = useState(false);
 
-  const img = Img[type];
-  const alt = img.alt + `${isActive && active ? " 종료" : ""}`;
+  const Icon = Img[type];
 
   const handleClick = () => {
     const update = !active;
@@ -37,7 +37,7 @@ const ListOption = (props: ListOptionProps) => {
       $active={!isActive || active}
       onClick={handleClick}
     >
-      <Image src={img.src} alt={alt} width={25} height={25} />
+      <Icon.Image size={Icon.size} color={color.white} />
     </ListOptionStyle.Container>
   );
 };

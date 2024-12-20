@@ -30,8 +30,8 @@ const StateBar = styled.svg<StateBarProps>`
   .state {
     stroke: ${(props) => props.theme.color.white};
     stroke-width: 4;
-    stroke-dasharray: 263;
-    stroke-dashoffset: ${(props) => 263 - 263 * props.$percent};
+    stroke-dasharray: 264;
+    stroke-dashoffset: ${(props) => 264 - 264 * props.$percent};
 
     fill: none;
 
