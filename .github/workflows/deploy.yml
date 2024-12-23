@@ -23,9 +23,19 @@ jobs:
         run: |
           echo "NEXT_PUBLIC_CLIENT=${{ secrets.NEXT_PUBLIC_CLIENT }}" >> .env.production
 
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-docker-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-docker-
+
       - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME}}/rhythm-up:latest .
+          docker build --cache-from=type=local,src=/tmp/.buildx-cache \
+                       --cache-to=type=local,dest=/tmp/.buildx-cache \
+                       -t ${{ secrets.DOCKERHUB_USERNAME}}/rhythm-up:latest .
           docker push ${{ secrets.DOCKERHUB_USERNAME}}/rhythm-up:latest
 
       - name: Deploy to Server with Docker Compose
@@ -56,4 +66,5 @@ jobs:
 
             docker-compose pull
             docker-compose down
+            docker image prune -af
             docker-compose up -d
