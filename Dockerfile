@@ -4,7 +4,7 @@ WORKDIR /builder
 
 COPY package.json yarn.lock ./
 
-RUN yarn install
+RUN yarn install --frozen-lockfile
 
 COPY . .
 
@@ -16,7 +16,7 @@ WORKDIR /app
 
 COPY package.json yarn.lock ./
 
-RUN yarn install --production
+RUN yarn install --production --frozen-lockfile
 
 COPY --from=builder /builder/dist ./dist
 COPY --from=builder /builder/.next ./.next
