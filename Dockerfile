@@ -1,4 +1,6 @@
 FROM node:20.16-alpine3.19 AS base
+
+FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /usr/src/app 
 COPY package.json yarn.lock ./
