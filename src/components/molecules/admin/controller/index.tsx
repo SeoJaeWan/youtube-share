@@ -49,8 +49,8 @@ const Controller = () => {
 
         <ControllerStyle.PlayingBox>
           <ListOption type="link" onClick={handleCopyLink} />
-          <ListOption type="loop" isActive onClick={loopList} />
           <ListOption type="shuffle" isActive onClick={shuffleList} />
+          <ListOption type="loop" isActive onClick={loopList} />
         </ControllerStyle.PlayingBox>
       </ControllerStyle.TopController>
       {/*  */}

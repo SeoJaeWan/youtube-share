@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import { useAlert } from "../useAlert";
 
 const useMusicForm = () => {
   const form = useForm({
@@ -7,16 +8,16 @@ const useMusicForm = () => {
       link: "",
     },
   });
+  const { addMessage } = useAlert();
 
   const linkRegister = form.register("link", {
     required: { value: true, message: "링크를 입력해주세요." },
     pattern: {
       value:
-        /^(https:\/\/(www\.)?youtube\.com\/watch\?v=[a-zA-Z0-9_-]+|https:\/\/youtu\.be\/[a-zA-Z0-9_-]+)(\?[^ ]*)?$/,
+        /^(https:\/\/(www\.)?youtube\.com\/watch\?v=[a-zA-Z0-9_-]+(&[a-zA-Z0-9_-]+=[^&]*)*|https:\/\/youtu\.be\/[a-zA-Z0-9_-]+)(\?[^ ]*)?$/,
       message: "유효한 링크를 입력해주세요.",
     },
   });
-
   const error = form.formState.errors;
 
   const linkError = error.link;
@@ -50,8 +51,14 @@ const useMusicForm = () => {
         videoId: link,
         events: {
           onReady: (event) => {
-            submit({ title: event.target.videoTitle, link, time });
-
+            if (event.target.videoTitle) {
+              submit({ title: event.target.videoTitle, link, time });
+            } else {
+              addMessage({
+                message: "노래를 찾을 수 없습니다.",
+                type: "notification",
+              });
+            }
             event.target.destroy();
             document.body.removeChild(formEl);
             formEl.remove();

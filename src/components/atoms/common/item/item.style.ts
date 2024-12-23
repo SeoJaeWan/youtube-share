@@ -61,7 +61,7 @@ const Container = styled.li<ContainerProps>`
 const Title = styled.h2`
   flex-grow: 1;
 
-  height: 21px;
+  height: 24px;
 
   font-size: ${(props) => props.theme.font(18)};
   font-weight: 500;
