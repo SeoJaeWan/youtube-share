@@ -7,7 +7,6 @@ COPY package.json yarn.lock ./
 RUN yarn --frozen-lockfile
 COPY . .
 RUN yarn build
-RUN rm -rf ./.next/cache
 
 FROM base AS runner
 WORKDIR /app
