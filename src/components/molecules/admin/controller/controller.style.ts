@@ -46,7 +46,7 @@ const LeftController = styled.div`
 
 const MusicTitle = styled.h1`
   width: 100%;
-  height: 36px;
+  height: 40px;
 
   font-size: ${(props) => props.theme.font(30)};
   font-weight: 600;
