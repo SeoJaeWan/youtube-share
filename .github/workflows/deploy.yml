@@ -38,8 +38,8 @@ jobs:
         run: |
           docker buildx build --cache-from=type=local,src=/tmp/.buildx-cache \
                               --cache-to=type=local,dest=/tmp/.buildx-cache \
+                              --push \
                               -t ${{ secrets.DOCKERHUB_USERNAME}}/rhythm-up:latest .
-          docker push ${{ secrets.DOCKERHUB_USERNAME}}/rhythm-up:latest
 
       - name: Deploy to Server with Docker Compose
         uses: appleboy/ssh-action@master
