@@ -1,26 +1,22 @@
-FROM node:20.16-alpine3.19 AS builder
-
-WORKDIR /builder
-
+FROM node:20.16-alpine3.19 AS base
+RUN apk add --no-cache libc6-compat
+WORKDIR /usr/src/app 
 COPY package.json yarn.lock ./
+RUN yarn --frozen-lockfile --production;
+RUN rm -rf ./.next/cache
 
-RUN yarn install --frozen-lockfile
-
+FROM base AS builder
+WORKDIR /usr/src/app
+COPY --from=deps /usr/src/app/node_modules ./node_modules
 COPY . .
-
 RUN yarn build
 
-FROM node:20.16-alpine3.19 AS production
+FROM base AS runner
+WORKDIR /usr/src/app
 
-WORKDIR /app
-
-COPY package.json yarn.lock ./
-
-RUN yarn install --production --frozen-lockfile
-
-COPY --from=builder /builder/dist ./dist
-COPY --from=builder /builder/.next ./.next
-COPY --from=builder /builder/public ./public
+COPY --from=builder /usr/src/app/public ./public
+COPY --from=builder /usr/src/app/.next/standalone ./
+COPY --from=builder /usr/src/app/.next/static ./.next/static
 
 EXPOSE 3001
 
