@@ -17,6 +17,7 @@ FROM base AS runner
 WORKDIR /usr/src/app
 
 COPY --from=builder /usr/src/app/public ./public
+COPY --from=builder /usr/src/app/dist ./dist
 COPY --from=builder /usr/src/app/.next/standalone ./
 COPY --from=builder /usr/src/app/.next/static ./.next/static
 

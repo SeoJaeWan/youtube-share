@@ -6,7 +6,7 @@ const config = {
     styledComponents: true,
   },
   reactStrictMode: false,
-  output: "standalone",
+  output: "standalone" as const,
 };
 
 const nextConfig = withPWA({
