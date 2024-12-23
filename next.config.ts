@@ -1,19 +1,13 @@
-import withPWA from "next-pwa";
+import { NextConfig } from "next";
 
-const config = {
+const config: NextConfig = {
   /* config options here */
   compiler: {
     styledComponents: true,
   },
   reactStrictMode: false,
   output: "standalone" as const,
+  serverExternalPackages: ["socket.io"],
 };
 
-const nextConfig = withPWA({
-  dest: "public",
-  register: true,
-  skipWaiting: true,
-  runtimeCaching: [],
-})(config);
-
-export default nextConfig;
+export default config;

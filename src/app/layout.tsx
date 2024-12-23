@@ -2,6 +2,7 @@ import StyledComponentsRegistry from "@/style/lib/registry";
 import Theme from "@/style/lib/theme";
 import localFont from "next/font/local";
 import Script from "next/script";
+import "@/utils/createServerModules";
 
 const pretendard = localFont({
   src: "./fonts/PretendardVariable.woff2",
