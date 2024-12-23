@@ -6,8 +6,8 @@ import { TiLink, TiArrowShuffle, TiArrowLoop } from "react-icons/ti";
 
 const Img = {
   link: { Image: TiLink, size: 22 },
-  loop: { Image: TiArrowShuffle, size: 20 },
-  shuffle: { Image: TiArrowLoop, size: 20 },
+  loop: { Image: TiArrowLoop, size: 20 },
+  shuffle: { Image: TiArrowShuffle, size: 20 },
 };
 
 interface ListOptionProps {
