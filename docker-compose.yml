@@ -2,8 +2,8 @@ version: "3.8"
 
 services:
   rhythm-up:
-    image: sjw7324/rhythm-up:latest
-    container_name: rhythm-up
+    image: sjw7324/rhythm-up2:latest
+    container_name: rhythm-up2
     ports:
       - "3001:3001"
     environment:
