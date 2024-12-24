@@ -66,6 +66,12 @@ const Input = styled.input<InputProps>`
   }
 `;
 
+const ButtonBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
 const Error = styled.p`
   height: 16px;
 
@@ -78,6 +84,7 @@ const MusicFormStyle = {
   Label,
   Input,
   Error,
+  ButtonBox,
 };
 
 export default MusicFormStyle;
