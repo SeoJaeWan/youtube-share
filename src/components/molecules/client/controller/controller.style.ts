@@ -24,6 +24,11 @@ const Title = styled.h1`
   font-weight: 600;
 
   color: ${(props) => props.theme.color.white};
+
+  @media (max-width: ${(props) => props.theme.media.mobile}) {
+    font-size: ${(props) => props.theme.font(24)};
+    height: 29px;
+  }
 `;
 
 const ControllerStyle = {

@@ -3,11 +3,12 @@ import { color } from "@/style/theme";
 import ListOptionStyle from "./listOption.style";
 import { useEffect, useState } from "react";
 import { TiLink, TiArrowShuffle, TiArrowLoop } from "react-icons/ti";
+import HoverInfo from "../../common/hoverInfo";
 
 const Img = {
-  link: { Image: TiLink, size: 22 },
-  loop: { Image: TiArrowLoop, size: 20 },
-  shuffle: { Image: TiArrowShuffle, size: 20 },
+  link: { Image: TiLink, size: 22, label: "공유" },
+  loop: { Image: TiArrowLoop, size: 20, label: "반복 재생" },
+  shuffle: { Image: TiArrowShuffle, size: 20, label: "랜덤 셔플" },
 };
 
 interface ListOptionProps {
@@ -34,9 +35,11 @@ const ListOption = (props: ListOptionProps) => {
 
   return (
     <ListOptionStyle.Container
+      className="tooltip"
       $active={!isActive || active}
       onClick={handleClick}
     >
+      <HoverInfo>{Icon.label}</HoverInfo>
       <Icon.Image size={Icon.size} color={color.white} />
     </ListOptionStyle.Container>
   );

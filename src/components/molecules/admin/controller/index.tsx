@@ -45,7 +45,7 @@ const Controller = () => {
   return (
     <ControllerStyle.Container>
       <ControllerStyle.TopController>
-        <TrackController />
+        <TrackController leftTooltip />
 
         <ControllerStyle.PlayingBox>
           <ListOption type="link" onClick={handleCopyLink} />
