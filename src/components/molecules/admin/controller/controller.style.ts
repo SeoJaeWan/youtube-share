@@ -55,6 +55,7 @@ const MusicTitle = styled.h1`
 
   @media (max-width: ${(props) => props.theme.media.mobile}) {
     font-size: ${(props) => props.theme.font(24)};
+    height: 29px;
   }
 `;
 
