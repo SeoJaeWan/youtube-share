@@ -145,7 +145,9 @@ const YoutubeProvider = (props: PropsWithChildren) => {
   };
 
   const updateVolume = (vol: number) => {
-    player.current!.setVolume(vol);
+    if (player.current) {
+      player.current.setVolume(vol);
+    }
     volume.current = vol;
   };
 

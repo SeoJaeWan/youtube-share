@@ -55,6 +55,15 @@ const Global = styled.createGlobalStyle`
   #player {
     display: none;
   }
+
+  .tooltip {
+    position: relative;
+
+    &:hover .tooltip-info {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
 `;
 
 export default Global;

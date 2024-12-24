@@ -4,8 +4,14 @@ import useTrackManager from "@/store/trackManager";
 import TrackControllerStyle from "./trackController.style";
 import { color } from "@/style/theme";
 import { useYoutube } from "@/hooks/useYoutube";
+import HoverInfo from "../hoverInfo";
 
-const TrackController = () => {
+interface TrackControllerProps {
+  leftTooltip?: boolean;
+}
+
+const TrackController = (props: TrackControllerProps) => {
+  const { leftTooltip } = props;
   const { isList, updateList } = useTrackManager();
   const { list } = useYoutube();
 
@@ -14,11 +20,18 @@ const TrackController = () => {
   };
 
   return (
-    <TrackControllerStyle.Container onClick={handleUpdateList}>
+    <TrackControllerStyle.Container
+      className="tooltip"
+      onClick={handleUpdateList}
+    >
+      <HoverInfo leftTooltip={leftTooltip}>
+        {isList ? "노래 추가" : "재생 목록"}
+      </HoverInfo>
+
       {isList ? (
-        <FaListUl color={color.white} />
-      ) : (
         <IoAddOutline color={color.white} size={20} />
+      ) : (
+        <FaListUl color={color.white} />
       )}
     </TrackControllerStyle.Container>
   );
