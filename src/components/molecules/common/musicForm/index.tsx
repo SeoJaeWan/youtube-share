@@ -3,6 +3,7 @@ import MusicFormStyle from "./musicForm.style";
 import useMusicForm from "@/hooks/useMusicForm";
 import { addList } from "@/socket";
 import { useAlert } from "@/hooks/useAlert";
+import Help from "@/components/atoms/common/help";
 
 const MusicForm = () => {
   const {
@@ -39,7 +40,10 @@ const MusicForm = () => {
         <MusicFormStyle.Error>{linkError?.message}</MusicFormStyle.Error>
       </MusicFormStyle.Label>
 
-      <Button>등록</Button>
+      <MusicFormStyle.ButtonBox>
+        <Help />
+        <Button>등록</Button>
+      </MusicFormStyle.ButtonBox>
     </MusicFormStyle.Container>
   );
 };
