@@ -12,7 +12,13 @@ const createMeta = ({
 }): Metadata => ({
   title: `Rhythm Up${title}`,
   description,
-  keywords: "노동요, 재생목록, 유튜브, 노래, 음악, 뮤직",
+  keywords: "리듬업, 노동요, 재생목록, 유튜브, 노래, 음악, 뮤직",
+  verification: {
+    google: "xDw6n-eYm5QL9k9bksfKbS7_HgYWxkLNr2dj-cQ3Eeo",
+    other: {
+      "naver-site-verification": "0fc31dc1e75cc9e80987a315848e2045322fc792",
+    },
+  },
   openGraph: {
     title: `Rhythm Up${title}`,
     description,

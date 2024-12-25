@@ -1,0 +1,11 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /admin/*
+Disallow: /client/*
+
+# Host
+Host: https://rhythm-up.seojaewan.com
+
+# Sitemaps
+Sitemap: https://rhythm-up.seojaewan.com/sitemap.xml
