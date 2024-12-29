@@ -4,14 +4,13 @@ import ItemStyle from "./item.style";
 import SlideText from "../../common/slideText";
 import { color } from "@/style/theme";
 import useTrackManager from "@/store/trackManager";
-import { ListType } from "@/components/molecules/common/list";
-import { HopeMusic } from "@/types/global";
+import { HopeMusic, Type } from "@/types/global";
 import { useYoutube } from "@/hooks/useYoutube";
 
 interface ItemProps extends HopeMusic {
   index: number;
   delay: number;
-  type: ListType;
+  type: Type;
 }
 
 const Item = (props: ItemProps) => {
@@ -41,19 +40,17 @@ const Item = (props: ItemProps) => {
         <SlideText>{title}</SlideText>
       </ItemStyle.Title>
       {type === "admin" && (
-        <>
-          <ItemStyle.Button disabled={active} onClick={handleRemove}>
-            <RiDeleteBin6Line size={18} color={color.gray} />
-          </ItemStyle.Button>
-          <ItemStyle.Button
-            $active={active}
-            disabled={active}
-            onClick={handleUpdate}
-          >
-            <IoIosPlay size={22} color={active ? color.white : color.primary} />
-          </ItemStyle.Button>
-        </>
+        <ItemStyle.Button disabled={active} onClick={handleRemove}>
+          <RiDeleteBin6Line size={18} color={color.gray} />
+        </ItemStyle.Button>
       )}
+      <ItemStyle.Button
+        $active={active}
+        disabled={active}
+        onClick={handleUpdate}
+      >
+        <IoIosPlay size={22} color={active ? color.white : color.primary} />
+      </ItemStyle.Button>
     </ItemStyle.Container>
   );
 };

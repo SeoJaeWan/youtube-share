@@ -6,6 +6,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -22,6 +23,10 @@ export const WaveProvider = (props: PropsWithChildren) => {
   const path = usePathname();
   const [wave, setWave] = useState(false);
   const waveRef = useRef<HTMLDivElement>(null);
+
+  const renderChildren = useMemo(() => {
+    return children;
+  }, [children]);
 
   const waveAni = wave
     ? path === "/"
@@ -54,7 +59,7 @@ export const WaveProvider = (props: PropsWithChildren) => {
         onWave,
       }}
     >
-      {children}
+      {renderChildren}
 
       <WaveStyle.Container ref={waveRef} className={waveAni}>
         <WaveStyle.Wave

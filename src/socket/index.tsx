@@ -1,6 +1,6 @@
 "use client";
 
-import { HopeMusic } from "@/types/global";
+import { HopeMusic, Type } from "@/types/global";
 import { io } from "socket.io-client";
 
 const socketUrl = process.env.NEXT_PUBLIC_CLIENT;
@@ -18,7 +18,15 @@ const createRoom = (
 
 const joinRoom = (
   id: string,
-  callback: ({ id, status }: { id: string; status: string }) => void
+  callback: ({
+    id,
+    status,
+    type,
+  }: {
+    id: string;
+    status: string;
+    type: Type;
+  }) => void
 ) => {
   socket.emit("join", id);
   socket.on("enter", callback);
@@ -57,7 +65,7 @@ const playMusic = (callback: (hopeMusic: HopeMusic | null) => void) => {
   socket.on("playMusic", callback);
 };
 
-const bombRoom = (callback: () => void) => {
+const bombRoom = (callback: (type: Type) => void) => {
   socket.on("bomb", callback);
 };
 
@@ -67,6 +75,11 @@ const clearSocket = () => {
   socket.off("checked");
   socket.off("addedList");
   socket.off("playList");
+  socket.off("playMusic");
+  socket.off("bomb");
+};
+
+const clearClientSocket = () => {
   socket.off("playMusic");
   socket.off("bomb");
 };
@@ -84,4 +97,5 @@ export {
   playMusic,
   bombRoom,
   clearSocket,
+  clearClientSocket,
 };

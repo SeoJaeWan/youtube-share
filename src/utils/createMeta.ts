@@ -33,7 +33,6 @@ const createMeta = ({
     images: { url: `${client}/assets/common/image.png` },
   },
   manifest: "/manifest.json",
-  themeColor: color.secondary,
   applicationName: "Rhythm Up",
   appleWebApp: {
     capable: true,
