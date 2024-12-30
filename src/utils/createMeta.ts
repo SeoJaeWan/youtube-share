@@ -22,7 +22,6 @@ const createMeta = ({
     title: `Rhythm Up${title}`,
     description,
     type: "website",
-    url: client,
     images: { url: `${client}/assets/common/image.png` },
   },
   twitter: {
