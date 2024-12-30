@@ -207,11 +207,12 @@ const YoutubeProvider = (props: PropsWithChildren) => {
 
   const addMusic = useCallback(
     (music: HopeMusic) => {
+      const list = listRef.current;
       const newList = [...list, music];
 
       updateList(newList, newList);
     },
-    [list, updateList]
+    [updateList]
   );
 
   const initList = useCallback(() => {
@@ -240,9 +241,20 @@ const YoutubeProvider = (props: PropsWithChildren) => {
     setCurrent(hopeMusic);
   }, []);
 
-  const playerListUpdate = useCallback((hopeMusicList: HopeMusic[]) => {
-    setList(hopeMusicList);
-  }, []);
+  const playerListUpdate = useCallback(
+    (hopeMusicList: HopeMusic[]) => {
+      setList(hopeMusicList);
+      listRef.current = hopeMusicList;
+      originListRef.current = hopeMusicList;
+
+      const currentIdx = hopeMusicList.findIndex(
+        (music) => music.time === current?.time
+      );
+
+      currentTurn.current = currentIdx === -1 ? 0 : currentIdx;
+    },
+    [current]
+  );
 
   useEffect(() => {
     return () => {

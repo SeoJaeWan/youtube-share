@@ -50,7 +50,7 @@ const AdminTemplate = () => {
   return (
     <AdminStyle.Container>
       <AdminStyle.Controller>
-        <Controller />
+        <Controller type={"admin"} />
       </AdminStyle.Controller>
       <AdminStyle.List>
         <List type={"admin"} />

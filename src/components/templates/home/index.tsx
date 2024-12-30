@@ -14,7 +14,7 @@ const HomeTemplate = () => {
   const handleCreateRoom = () => {
     createRoom(({ id }: { id: string }) => {
       onWave(() => {
-        router.push(`/admin/${id}`);
+        router.push(`/player/${id}`);
       });
     });
   };

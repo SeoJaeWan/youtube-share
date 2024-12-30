@@ -3,11 +3,10 @@ import { useEffect, useRef } from "react";
 import useTrackManager from "@/store/trackManager";
 import Item from "@/components/atoms/common/item";
 import { useYoutube } from "@/hooks/useYoutube";
-
-export type ListType = "client" | "admin";
+import { Type } from "@/types/global";
 
 interface ListProps {
-  type: ListType;
+  type: Type;
 }
 
 const List = (props: ListProps) => {

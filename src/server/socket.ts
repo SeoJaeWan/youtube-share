@@ -1,11 +1,10 @@
-import { Server } from "socket.io";
+import { Server, Socket } from "socket.io";
 import { getUserList } from "./utils/socketUtils";
 import { HopeMusic } from "../types/global";
 
 const createSocket = (io: Server) => {
-  io.on("connection", (socket) => {
+  io.on("connection", (socket: Socket) => {
     let room: string = "";
-    let isAdmin: boolean = false;
 
     const getId = () => {
       let id;
@@ -26,7 +25,6 @@ const createSocket = (io: Server) => {
       socket.join(id);
       socket.emit("enter", { id, status: "success" });
 
-      isAdmin = true;
       room = id;
     });
 
@@ -34,44 +32,55 @@ const createSocket = (io: Server) => {
       const ids = io.sockets.adapter.rooms.get(id);
 
       if (!ids || ids.size < 0) {
-        return socket.emit("enter", { id, status: "fail" });
+        return socket.emit("joinRoom", { id, status: "fail" });
       }
 
       const admin = Array.from(ids)[0];
+      const isAdmin = admin === socket.id;
 
-      socket.join(id);
-      socket.emit("enter", { id, status: "success" });
+      if (isAdmin) {
+        return socket.emit("joinRoom", {
+          id,
+          status: "success",
+          type: "admin",
+        });
+      } else {
+        socket.join(id);
+        socket.emit("joinRoom", { id, status: "success", type: "client" });
 
-      room = id;
+        room = id;
 
-      io.to(admin).emit("join");
+        io.to(admin).emit("join");
+
+        return;
+      }
     });
 
     socket.on("check", () => {
       const ids = io.sockets.adapter.rooms.get(room)!;
 
-      if (room) {
-        const firstId = Array.from(ids)[0];
+      setTimeout(() => {
+        if (room) {
+          const firstId = Array.from(ids)[0];
 
-        if (socket.id === firstId) {
-          return socket.emit("checked", true);
+          if (socket.id === firstId) {
+            return socket.emit("checked", true);
+          }
         }
-      }
 
-      socket.emit("checked", false);
+        socket.emit("checked", false);
+      }, 1000);
     });
 
     socket.on("disconnect", () => {
       if (room) {
         const ids = io.sockets.adapter.rooms.get(room);
-        if (ids) {
-          if (isAdmin) {
-            io.to(room).emit("bomb");
 
-            ids.forEach((id) => {
-              io.sockets.sockets.get(id)!.leave(room);
-            });
-          }
+        if (ids) {
+          const array = Array.from(ids);
+
+          io.to(array[0]).emit("bomb", "admin");
+
           room = "";
         }
       }
