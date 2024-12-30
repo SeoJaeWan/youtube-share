@@ -251,7 +251,7 @@ const YoutubeProvider = (props: PropsWithChildren) => {
         (music) => music.time === current?.time
       );
 
-      currentTurn.current = currentIdx;
+      currentTurn.current = currentIdx === -1 ? 0 : currentIdx;
     },
     [current]
   );

@@ -5,6 +5,7 @@ import { useYoutube } from "@/hooks/useYoutube";
 import {
   addedList,
   bombRoom,
+  clearAdminSocket,
   clearClientSocket,
   joinRoom,
   notificationList,
@@ -31,7 +32,7 @@ const PlayerTemplate = () => {
 
   // join
   useEffect(() => {
-    console.log("join");
+    if (type) return;
     joinRoom(params.id, ({ status, type }) => {
       if (status === "fail") {
         addMessage({
@@ -45,7 +46,6 @@ const PlayerTemplate = () => {
         onWave();
 
         if (type === "admin") {
-          console.log("????!!!");
           initList();
         } else {
           playList(playerListUpdate);
@@ -54,19 +54,12 @@ const PlayerTemplate = () => {
         setType(type);
       }
     });
-  }, [router, params.id, initList, onWave, addMessage, playerListUpdate]);
-
-  useEffect(() => {
-    console.log("router");
-  }, [router]);
-
-  useEffect(() => {
-    console.log("params");
-  }, [params.id]);
+  }, [type, router, params.id, initList, onWave, addMessage, playerListUpdate]);
 
   // Client
   useEffect(() => {
     if (type === "client") {
+      playList(playerListUpdate);
       bombRoom((type) => {
         setType(type);
       });
@@ -75,19 +68,21 @@ const PlayerTemplate = () => {
     return () => {
       clearClientSocket();
     };
-  }, [type, router]);
+  }, [type, router, playerListUpdate]);
 
   // Admin
   useEffect(() => {
-    console.log(type);
     if (type === "admin") {
       addedList(addMusic);
       observeJoin(() => {
-        console.log("join");
         notificationList(list);
         notificationMusic(current);
       });
     }
+
+    return () => {
+      clearAdminSocket();
+    };
   }, [type, list, current, addMusic]);
 
   if (!type) return null;

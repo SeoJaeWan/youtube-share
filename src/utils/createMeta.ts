@@ -1,4 +1,3 @@
-import { color } from "@/style/theme";
 import { Metadata } from "next";
 
 const client = process.env.NEXT_PUBLIC_CLIENT;

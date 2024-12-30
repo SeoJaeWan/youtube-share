@@ -32,36 +32,44 @@ const createSocket = (io: Server) => {
       const ids = io.sockets.adapter.rooms.get(id);
 
       if (!ids || ids.size < 0) {
-        return socket.emit("enter", { id, status: "fail" });
+        return socket.emit("joinRoom", { id, status: "fail" });
       }
 
       const admin = Array.from(ids)[0];
       const isAdmin = admin === socket.id;
 
       if (isAdmin) {
-        socket.emit("enter", { id, status: "success", type: "admin" });
+        return socket.emit("joinRoom", {
+          id,
+          status: "success",
+          type: "admin",
+        });
       } else {
         socket.join(id);
-        socket.emit("enter", { id, status: "success", type: "client" });
+        socket.emit("joinRoom", { id, status: "success", type: "client" });
 
         room = id;
 
         io.to(admin).emit("join");
+
+        return;
       }
     });
 
     socket.on("check", () => {
       const ids = io.sockets.adapter.rooms.get(room)!;
 
-      if (room) {
-        const firstId = Array.from(ids)[0];
+      setTimeout(() => {
+        if (room) {
+          const firstId = Array.from(ids)[0];
 
-        if (socket.id === firstId) {
-          return socket.emit("checked", true);
+          if (socket.id === firstId) {
+            return socket.emit("checked", true);
+          }
         }
-      }
 
-      socket.emit("checked", false);
+        socket.emit("checked", false);
+      }, 1000);
     });
 
     socket.on("disconnect", () => {
@@ -70,7 +78,6 @@ const createSocket = (io: Server) => {
 
         if (ids) {
           const array = Array.from(ids);
-          console.log(array);
 
           io.to(array[0]).emit("bomb", "admin");
 
