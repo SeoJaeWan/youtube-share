@@ -3,6 +3,7 @@ import {
   PropsWithChildren,
   useCallback,
   useContext,
+  useEffect,
   useRef,
   useState,
 } from "react";
@@ -55,6 +56,24 @@ const AlertProvider = (props: PropsWithChildren) => {
     setMessageList((prev) => prev.filter((message) => message.time !== time));
   };
 
+  useEffect(() => {
+    const handleExternalClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+
+      if (!target.closest(".alert")) {
+        setMessageList((prev) =>
+          prev.filter(({ type }) => type === "notification")
+        );
+      }
+    };
+
+    document.addEventListener("click", handleExternalClick);
+
+    return () => {
+      document.removeEventListener("click", handleExternalClick);
+    };
+  }, []);
+
   return (
     <AlertContext.Provider value={{ addMessage }}>
       {children}
@@ -65,7 +84,7 @@ const AlertProvider = (props: PropsWithChildren) => {
             <AlertStyle.Message>{message.message}</AlertStyle.Message>
           </AlertStyle.NotificationContainer>
         ) : (
-          <AlertStyle.AlertContainer key={message.time}>
+          <AlertStyle.AlertContainer key={message.time} className="alert">
             <AlertStyle.Message>{message.message}</AlertStyle.Message>
 
             <AlertStyle.ButtonBox>

@@ -12,10 +12,10 @@ const List = styled.div`
   height: 70vh;
 `;
 
-const ClientStyle = {
+const PlayerStyle = {
   Container,
   Controller,
   List,
 };
 
-export default ClientStyle;
+export default PlayerStyle;

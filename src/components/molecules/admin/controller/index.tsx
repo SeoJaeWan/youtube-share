@@ -7,16 +7,23 @@ import TrackController from "@/components/atoms/common/trackController";
 import { useYoutube } from "@/hooks/useYoutube";
 import { useParams } from "next/navigation";
 import { useAlert } from "@/hooks/useAlert";
+import { Type } from "@/types/global";
 
 const Dump = {
   title: "노래를 추가해주세요.",
 };
 
-const Controller = () => {
+interface ControllerProps {
+  type: Type;
+}
+
+const Controller = (props: ControllerProps) => {
+  const { type } = props;
   const { id } = useParams<{ id: string }>();
   const { current, shuffleList, loopList } = useYoutube();
   const { addMessage } = useAlert();
 
+  const isAdmin = type === "admin";
   const playing = current || Dump;
 
   const handleCopyLink = () => {
@@ -49,7 +56,9 @@ const Controller = () => {
 
         <ControllerStyle.PlayingBox>
           <ListOption type="link" onClick={handleCopyLink} />
-          <ListOption type="shuffle" isActive onClick={shuffleList} />
+          {isAdmin && (
+            <ListOption type="shuffle" isActive onClick={shuffleList} />
+          )}
           <ListOption type="loop" isActive onClick={loopList} />
         </ControllerStyle.PlayingBox>
       </ControllerStyle.TopController>

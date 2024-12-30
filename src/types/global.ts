@@ -3,3 +3,5 @@ export interface HopeMusic {
   link: string;
   time: string;
 }
+
+export type Type = "admin" | "client";
